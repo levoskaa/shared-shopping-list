@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using SharedShoppingList.API.Data;
 
 namespace SharedShoppingList.API.Infrastructure
 {
@@ -6,7 +7,10 @@ namespace SharedShoppingList.API.Infrastructure
     {
         protected override void Load(ContainerBuilder builder)
         {
-            // TODO
+            // Dapper
+            builder.RegisterType<DapperContext>()
+                .AsSelf()
+                .SingleInstance();
         }
     }
 }
