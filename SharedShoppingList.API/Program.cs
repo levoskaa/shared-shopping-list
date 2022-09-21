@@ -3,6 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SharedShoppingList.API.Application.Entities;
@@ -10,6 +11,7 @@ using SharedShoppingList.API.Data;
 using SharedShoppingList.API.Infrastructure;
 using SharedShoppingList.API.Infrastructure.ErrorHandling;
 using System.Text;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -24,7 +26,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
     .ConfigureContainer<ContainerBuilder>(builder =>
     {
         // AutoMapper
-        builder.RegisterAutoMapper(typeof(Program).Assembly);
+        builder.RegisterAutoMapper(Assembly.GetExecutingAssembly());
         // Custom types
         builder.RegisterModule(new SharedShoppingListModule());
     });
@@ -65,6 +67,9 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
     };
 });
+
+// MediatR
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 #endregion
 
 var app = builder.Build();
