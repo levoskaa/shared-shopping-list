@@ -31,7 +31,7 @@ builder.Services.AddSwaggerGen();
 
 // DbContext
 builder.Services.AddDbContext<SharedShoppingListContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 #endregion
 
 var app = builder.Build();
