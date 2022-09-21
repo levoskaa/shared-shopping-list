@@ -1,9 +1,11 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SharedShoppingList.API.Data;
 using SharedShoppingList.API.Infrastructure;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +19,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
     .ConfigureContainer<ContainerBuilder>(builder =>
     {
         // AutoMapper
-        builder.RegisterAutoMapper(typeof(Program).Assembly);
+        builder.RegisterAutoMapper(Assembly.GetExecutingAssembly());
         // Custom types
         builder.RegisterModule(new SharedShoppingListModule());
     });
@@ -32,6 +34,9 @@ builder.Services.AddSwaggerGen();
 // DbContext
 builder.Services.AddDbContext<SharedShoppingListContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+// MediatR
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 #endregion
 
 var app = builder.Build();
