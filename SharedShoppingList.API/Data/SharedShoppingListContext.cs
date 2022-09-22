@@ -1,21 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using SharedShoppingList.API.Application.Entities;
 
 namespace SharedShoppingList.API.Data
 {
-    public class SharedShoppingListContext : DbContext
+    public class SharedShoppingListContext : IdentityDbContext<User, Role, string>
     {
         public SharedShoppingListContext(DbContextOptions<SharedShoppingListContext> options)
             : base(options)
         {
         }
 
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            ApplyEntityConfigurations(modelBuilder);
+            base.OnModelCreating(builder);
+            ApplyEntityConfigurations(builder);
         }
 
-        private static void ApplyEntityConfigurations(ModelBuilder modelBuilder)
+        private static void ApplyEntityConfigurations(ModelBuilder builder)
         {
             // TODO
         }
