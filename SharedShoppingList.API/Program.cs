@@ -13,6 +13,7 @@ using SharedShoppingList.API.Infrastructure.ErrorHandling;
 using System.Text;
 using System.Reflection;
 using Microsoft.OpenApi.Models;
+using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -104,6 +105,8 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
     };
 });
+// Don't let claim names to be overwritten
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 // MediatR
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
