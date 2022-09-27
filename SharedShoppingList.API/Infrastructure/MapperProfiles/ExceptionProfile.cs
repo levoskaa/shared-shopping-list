@@ -8,6 +8,8 @@ namespace SharedShoppingList.API.Infrastructure.MapperProfiles
     {
         public ExceptionProfile()
         {
+            CreateMap<Exception, ErrorViewModel>();
+
             CreateMap<SharedShoppingListException, ErrorViewModel>()
                 .ForMember(
                     viewModel => viewModel.Errors,
