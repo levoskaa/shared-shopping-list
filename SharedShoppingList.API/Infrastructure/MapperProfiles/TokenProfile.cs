@@ -8,7 +8,7 @@ namespace SharedShoppingList.API.Infrastructure.MapperProfiles
     {
         public TokenProfile()
         {
-            CreateMap<Token, TokenViewModel>();
+            CreateMap<AuthenticationResult, TokenViewModel>();
         }
     }
 }

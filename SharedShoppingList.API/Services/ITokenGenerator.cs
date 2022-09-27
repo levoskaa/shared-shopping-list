@@ -5,6 +5,7 @@ namespace SharedShoppingList.API.Services
 {
     public interface ITokenGenerator
     {
-        Task<JwtSecurityToken> GenerateTokenAsync(User user);
+        Task<JwtSecurityToken> GenerateAccessTokenAsync(User user);
+        RefreshToken GenerateRefreshToken();
     }
 }

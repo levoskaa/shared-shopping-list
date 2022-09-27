@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SharedShoppingList.API.Application.Entities;
+using SharedShoppingList.API.Data.Configuration;
 
 namespace SharedShoppingList.API.Data
 {
@@ -19,7 +20,7 @@ namespace SharedShoppingList.API.Data
 
         private static void ApplyEntityConfigurations(ModelBuilder builder)
         {
-            // TODO
+            builder.ApplyConfiguration(new RefreshTokenEntityTypeConfiguration());
         }
     }
 }

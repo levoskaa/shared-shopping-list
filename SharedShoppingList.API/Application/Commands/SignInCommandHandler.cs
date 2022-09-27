@@ -8,7 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace SharedShoppingList.API.Application.Commands
 {
-    public class SignInCommandHandler : IRequestHandler<SignInCommand, Token>
+    public class SignInCommandHandler : IRequestHandler<SignInCommand, AuthenticationResult>
     {
         private readonly UserManager<User> userManager;
         private readonly ITokenGenerator tokenGenerator;
@@ -21,7 +21,7 @@ namespace SharedShoppingList.API.Application.Commands
             this.tokenGenerator = tokenGenerator;
         }
 
-        public async Task<Token> Handle(SignInCommand command, CancellationToken cancellationToken)
+        public async Task<AuthenticationResult> Handle(SignInCommand command, CancellationToken cancellationToken)
         {
             var user = await userManager.FindByNameAsync(command.Username);
             if (user == null || !(await userManager.CheckPasswordAsync(user, command.Password)))
@@ -31,11 +31,14 @@ namespace SharedShoppingList.API.Application.Commands
                     ValidationErrors.SignInCredentialsInvalid);
             }
 
-            var token = await tokenGenerator.GenerateTokenAsync(user);
-            return new Token
+            var accessToken = await tokenGenerator.GenerateAccessTokenAsync(user);
+            var refreshToken = tokenGenerator.GenerateRefreshToken();
+            // TODO: save refresh token
+            return new AuthenticationResult
             {
-                AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
-                ExpirationTime = token.ValidTo,
+                AccessToken = new JwtSecurityTokenHandler().WriteToken(accessToken),
+                RefreshToken = refreshToken.Token,
+                AccessTokenExpiryTime = accessToken.ValidTo,
             };
         }
     }

@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using SharedShoppingList.API.Application.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace SharedShoppingList.API.Services
@@ -20,7 +21,7 @@ namespace SharedShoppingList.API.Services
             this.configuration = configuration;
         }
 
-        public async Task<JwtSecurityToken> GenerateTokenAsync(User user)
+        public async Task<JwtSecurityToken> GenerateAccessTokenAsync(User user)
         {
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]));
             var claims = await GetUserClaimsAsync(user);
@@ -28,7 +29,7 @@ namespace SharedShoppingList.API.Services
             var token = new JwtSecurityToken(
                 issuer: configuration["JWT:Issuer"],
                 audience: configuration["JWT:Audience"],
-                expires: DateTime.Now.AddHours(double.Parse(configuration["JWT:AccessTokenLifespanInHours"])),
+                expires: DateTime.Now.AddMinutes(double.Parse(configuration["JWT:AccessTokenValidityInMinutes"])),
                 claims: claims,
                 signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
                 );
@@ -50,6 +51,17 @@ namespace SharedShoppingList.API.Services
             }
 
             return claims;
+        }
+
+        public RefreshToken GenerateRefreshToken()
+        {
+            // RandomNumberGenerator generates a cryptographically secure random string
+            var randomNumber = RandomNumberGenerator.GetBytes(64);
+            return new RefreshToken
+            {
+                Token = Convert.ToBase64String(randomNumber),
+                ExpiryTime = DateTime.Now.AddDays(int.Parse(configuration["JWT:RefreshTokenValidityInDays"])),
+            };
         }
     }
 }

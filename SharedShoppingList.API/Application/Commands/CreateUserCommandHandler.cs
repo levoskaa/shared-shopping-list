@@ -8,7 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace SharedShoppingList.API.Application.Commands
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Token>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, AuthenticationResult>
     {
         private readonly UserManager<User> userManager;
         private readonly ITokenGenerator tokenGenerator;
@@ -21,7 +21,7 @@ namespace SharedShoppingList.API.Application.Commands
             this.tokenGenerator = tokenGenerator;
         }
 
-        public async Task<Token> Handle(CreateUserCommand command, CancellationToken cancellationToken)
+        public async Task<AuthenticationResult> Handle(CreateUserCommand command, CancellationToken cancellationToken)
         {
             var existingUser = await userManager.FindByNameAsync(command.Username);
             if (existingUser != null)
@@ -41,11 +41,14 @@ namespace SharedShoppingList.API.Application.Commands
                 throw new Exception(); // TODO: use custom exception for 500
             }
 
-            var token = await tokenGenerator.GenerateTokenAsync(user);
-            return new Token
+            var accessToken = await tokenGenerator.GenerateAccessTokenAsync(user);
+            var refreshToken = tokenGenerator.GenerateRefreshToken();
+            // TODO: save refresh token
+            return new AuthenticationResult
             {
-                AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
-                ExpirationTime = token.ValidTo,
+                AccessToken = new JwtSecurityTokenHandler().WriteToken(accessToken),
+                RefreshToken = refreshToken.Token,
+                AccessTokenExpiryTime = accessToken.ValidTo,
             };
         }
     }
