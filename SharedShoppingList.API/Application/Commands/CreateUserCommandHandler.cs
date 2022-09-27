@@ -43,7 +43,10 @@ namespace SharedShoppingList.API.Application.Commands
 
             var accessToken = await tokenGenerator.GenerateAccessTokenAsync(user);
             var refreshToken = tokenGenerator.GenerateRefreshToken();
-            // TODO: save refresh token
+
+            user.AddRefreshToken(refreshToken);
+            await userManager.UpdateAsync(user);
+
             return new AuthenticationResult
             {
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(accessToken),

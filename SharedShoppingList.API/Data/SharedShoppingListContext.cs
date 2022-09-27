@@ -7,6 +7,8 @@ namespace SharedShoppingList.API.Data
 {
     public class SharedShoppingListContext : IdentityDbContext<User, Role, string>
     {
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+
         public SharedShoppingListContext(DbContextOptions<SharedShoppingListContext> options)
             : base(options)
         {
