@@ -9,6 +9,7 @@ namespace SharedShoppingList.API.Infrastructure.MapperProfiles
         public UserProfile()
         {
             CreateMap<SignInDto, SignInCommand>();
+            CreateMap<RegisterDto, CreateUserCommand>();
         }
     }
 }

@@ -47,6 +47,16 @@ builder.Services.AddIdentity<User, Role>()
     .AddEntityFrameworkStores<SharedShoppingListContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 8;
+    options.Password.RequiredUniqueChars = 1;
+});
+
 // Authentication
 builder.Services.AddAuthentication(options =>
 {

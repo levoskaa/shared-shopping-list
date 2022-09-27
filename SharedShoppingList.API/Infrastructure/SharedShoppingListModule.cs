@@ -2,8 +2,9 @@
 using FluentValidation;
 using MediatR;
 using SharedShoppingList.API.Application.Behaviors;
-using System.Reflection;
 using SharedShoppingList.API.Data;
+using SharedShoppingList.API.Services;
+using System.Reflection;
 
 namespace SharedShoppingList.API.Infrastructure
 {
@@ -26,6 +27,11 @@ namespace SharedShoppingList.API.Infrastructure
             builder.RegisterType<DapperContext>()
                 .AsSelf()
                 .SingleInstance();
+
+            // TokenGenerator
+            builder.RegisterType<TokenGenerator>()
+                .AsImplementedInterfaces()
+                .InstancePerDependency();
         }
     }
 }

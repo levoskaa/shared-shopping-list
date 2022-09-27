@@ -30,5 +30,15 @@ namespace SharedShoppingList.API.Controllers
             var token = await mediator.Send(signInCommand);
             return mapper.Map<TokenViewModel>(token);
         }
+
+        [HttpPost("register")]
+        [ProducesResponseType(typeof(TokenViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.BadRequest)]
+        public async Task<TokenViewModel> Register([FromBody] RegisterDto dto)
+        {
+            var createUserCommand = mapper.Map<CreateUserCommand>(dto);
+            var token = await mediator.Send(createUserCommand);
+            return mapper.Map<TokenViewModel>(token);
+        }
     }
 }

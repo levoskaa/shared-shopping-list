@@ -8,10 +8,11 @@ namespace SharedShoppingList.API.Infrastructure.MapperProfiles
     {
         public ExceptionProfile()
         {
-            CreateMap<DomainException, ErrorViewModel>();
-            CreateMap<EntityNotFoundException, ErrorViewModel>();
-            CreateMap<ForbiddenException, ErrorViewModel>();
-            CreateMap<Exception, ErrorViewModel>();
+            CreateMap<SharedShoppingListException, ErrorViewModel>()
+                .ForMember(
+                    viewModel => viewModel.Errors,
+                    options => options.MapFrom(exception => exception.ErrorCodes))
+                .IncludeAllDerived();
         }
     }
 }

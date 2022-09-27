@@ -8,12 +8,12 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace SharedShoppingList.API.Application.Commands
 {
-    public class SignInCommandHandler : IRequestHandler<SignInCommand, Token>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Token>
     {
         private readonly UserManager<User> userManager;
         private readonly ITokenGenerator tokenGenerator;
 
-        public SignInCommandHandler(
+        public CreateUserCommandHandler(
             UserManager<User> userManager,
             ITokenGenerator tokenGenerator)
         {
@@ -21,14 +21,24 @@ namespace SharedShoppingList.API.Application.Commands
             this.tokenGenerator = tokenGenerator;
         }
 
-        public async Task<Token> Handle(SignInCommand command, CancellationToken cancellationToken)
+        public async Task<Token> Handle(CreateUserCommand command, CancellationToken cancellationToken)
         {
-            var user = await userManager.FindByNameAsync(command.Username);
-            if (user == null || !(await userManager.CheckPasswordAsync(user, command.Password)))
+            var existingUser = await userManager.FindByNameAsync(command.Username);
+            if (existingUser != null)
             {
-                throw new DomainException(
-                    "Invalid sign in credentials",
-                    ValidationErrors.SignInCredentialsInvalid);
+                throw new DomainException("Username already taken",
+                    ValidationErrors.UsernameTaken);
+            }
+
+            var user = new User
+            {
+                SecurityStamp = Guid.NewGuid().ToString(),
+                UserName = command.Username
+            };
+            var userCreationResult = await userManager.CreateAsync(user, command.Password);
+            if (!userCreationResult.Succeeded)
+            {
+                throw new Exception(); // TODO: use custom exception for 500
             }
 
             var token = await tokenGenerator.GenerateTokenAsync(user);

@@ -1,10 +1,10 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+﻿using SharedShoppingList.API.Application.Entities;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace SharedShoppingList.API.Services
 {
     public interface ITokenGenerator
     {
-        JwtSecurityToken GenerateToken(IEnumerable<Claim> claims);
+        Task<JwtSecurityToken> GenerateTokenAsync(User user);
     }
 }
