@@ -32,6 +32,11 @@ namespace SharedShoppingList.API.Infrastructure
             builder.RegisterType<TokenGenerator>()
                 .AsImplementedInterfaces()
                 .InstancePerDependency();
+
+            // UnitOfWork
+            builder.RegisterType<UnitOfWork>()
+                .AsImplementedInterfaces()
+                .InstancePerDependency();
         }
     }
 }
