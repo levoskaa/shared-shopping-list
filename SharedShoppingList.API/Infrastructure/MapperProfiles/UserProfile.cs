@@ -10,6 +10,7 @@ namespace SharedShoppingList.API.Infrastructure.MapperProfiles
         {
             CreateMap<SignInDto, SignInCommand>();
             CreateMap<RegisterDto, CreateUserCommand>();
+            CreateMap<SignOutDto, SignOutCommand>();
         }
     }
 }

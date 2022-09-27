@@ -37,6 +37,11 @@ namespace SharedShoppingList.API.Infrastructure
             builder.RegisterType<UnitOfWork>()
                 .AsImplementedInterfaces()
                 .InstancePerDependency();
+
+            // IdentityHelper
+            builder.RegisterType<IdentityHelper>()
+                .AsImplementedInterfaces()
+                .InstancePerDependency();
         }
     }
 }
