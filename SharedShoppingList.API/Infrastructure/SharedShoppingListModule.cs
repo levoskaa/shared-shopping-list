@@ -5,6 +5,7 @@ using SharedShoppingList.API.Application.Behaviors;
 using SharedShoppingList.API.Data;
 using SharedShoppingList.API.Services;
 using System.Reflection;
+using SharedShoppingList.API.Data;
 
 namespace SharedShoppingList.API.Infrastructure
 {
