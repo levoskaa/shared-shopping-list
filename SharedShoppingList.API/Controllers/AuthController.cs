@@ -52,11 +52,11 @@ namespace SharedShoppingList.API.Controllers
         [HttpPost("sign-out")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
-        public void SignOut([FromBody] SignOutDto dto)
+        public async Task SignOut([FromBody] SignOutDto dto)
         {
             var signOutCommand = mapper.Map<SignOutCommand>(dto);
             signOutCommand.UserId = identityHelper.GetAuthenticatedUserId();
-            mediator.Send(signOutCommand);
+            await mediator.Send(signOutCommand);
         }
     }
 }
