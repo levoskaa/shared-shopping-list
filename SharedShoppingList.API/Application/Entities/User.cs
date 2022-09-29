@@ -16,5 +16,10 @@ namespace SharedShoppingList.API.Application.Entities
         {
             refreshTokens.Remove(refreshToken);
         }
+
+        public void RevokeAllRefreshTokens()
+        {
+            refreshTokens.Clear();
+        }
     }
 }

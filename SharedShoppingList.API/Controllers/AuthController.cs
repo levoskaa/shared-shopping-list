@@ -58,5 +58,18 @@ namespace SharedShoppingList.API.Controllers
             signOutCommand.UserId = identityHelper.GetAuthenticatedUserId();
             await mediator.Send(signOutCommand);
         }
+
+        [Authorize]
+        [HttpPost("revoke-all")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        public async Task RevokeAllRefreshTokens()
+        {
+            var revokeAllRefreshTokensCommand = new RevokeAllRefreshTokensCommand
+            {
+                UserId = identityHelper.GetAuthenticatedUserId(),
+            };
+            await mediator.Send(revokeAllRefreshTokensCommand);
+        }
     }
 }
