@@ -9,16 +9,16 @@ namespace SharedShoppingList.API.Application.Validators
         public CreateUserCommandValidator()
         {
             RuleFor(e => e.Username)
-                .NotEmpty().WithMessage(ValidationErrors.UsernameRequired);
+                .NotEmpty().WithErrorCode(ValidationErrors.UsernameRequired);
             RuleFor(e => e.Password)
-                .NotEmpty().WithMessage(ValidationErrors.PasswordRequired)
-                .MinimumLength(8).WithMessage(ValidationErrors.MinPasswordLength)
+                .NotEmpty().WithErrorCode(ValidationErrors.PasswordRequired)
+                .MinimumLength(8).WithErrorCode(ValidationErrors.MinPasswordLength)
                 // (?=.*\d) - at least one digit exists
-                .Matches(@"(?=.*\d)").WithMessage(ValidationErrors.PasswordDigitRequired)
+                .Matches(@"(?=.*\d)").WithErrorCode(ValidationErrors.PasswordDigitRequired)
                 // (?=.*[a-z]) - at least one lowercase letter exists
-                .Matches(@"(?=.*[a-z])").WithMessage(ValidationErrors.PasswordLowercaseRequired)
+                .Matches(@"(?=.*[a-z])").WithErrorCode(ValidationErrors.PasswordLowercaseRequired)
                 // (?=.*[A-Z]) - at least one uppercase letter exists
-                .Matches(@"(?=.*[A-Z])").WithMessage(ValidationErrors.PasswordUppercaseRequired);
+                .Matches(@"(?=.*[A-Z])").WithErrorCode(ValidationErrors.PasswordUppercaseRequired);
         }
     }
 }

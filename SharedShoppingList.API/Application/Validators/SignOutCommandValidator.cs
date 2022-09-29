@@ -9,10 +9,10 @@ namespace SharedShoppingList.API.Application.Validators
         public SignOutCommandValidator()
         {
             RuleFor(e => e.UserId)
-                .NotEmpty().WithMessage(ValidationErrors.UserIdRequired);
+                .NotEmpty().WithErrorCode(ValidationErrors.UserIdRequired);
 
             RuleFor(e => e.RefreshToken)
-                .NotEmpty().WithMessage(ValidationErrors.RefreshTokenRequired);
+                .NotEmpty().WithErrorCode(ValidationErrors.RefreshTokenRequired);
         }
     }
 }
