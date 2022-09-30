@@ -5,7 +5,7 @@ namespace SharedShoppingList.API.Application.Entities
     public class User : IdentityUser
     {
         private readonly List<RefreshToken> refreshTokens = new List<RefreshToken>();
-        public IReadOnlyCollection<RefreshToken> RefreshTokens => refreshTokens;
+        public virtual IReadOnlyCollection<RefreshToken> RefreshTokens => refreshTokens;
 
         public void AddRefreshToken(RefreshToken refreshToken)
         {
