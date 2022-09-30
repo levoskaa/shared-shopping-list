@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SharedShoppingList.API.Data;
 
@@ -11,9 +12,10 @@ using SharedShoppingList.API.Data;
 namespace SharedShoppingList.API.Migrations
 {
     [DbContext(typeof(SharedShoppingListContext))]
-    partial class SharedShoppingListContextModelSnapshot : ModelSnapshot
+    [Migration("20220927092755_AddRefreshToken")]
+    partial class AddRefreshToken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,15 +135,15 @@ namespace SharedShoppingList.API.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Value")
+                    b.Property<string>("Token")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("ExpiryTime")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("UserId", "Value");
+                    b.HasKey("UserId", "Token");
 
-                    b.ToTable("RefreshTokens");
+                    b.ToTable("RefreshToken");
                 });
 
             modelBuilder.Entity("SharedShoppingList.API.Application.Entities.Role", b =>

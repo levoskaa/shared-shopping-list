@@ -24,7 +24,7 @@ namespace SharedShoppingList.API.Application.Behaviors
 
             if (failures.Any())
             {
-                var errorCodes = failures.Select(failure => failure.ErrorMessage).ToArray();
+                var errorCodes = failures.Select(failure => failure.ErrorCode).ToArray();
                 throw new DomainException(
                     $"Command validation errors for type {typeof(TRequest).Name}",
                     errorCodes);

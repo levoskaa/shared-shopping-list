@@ -1,6 +1,6 @@
-﻿namespace SharedShoppingList.API.Application.ViewModels
+﻿namespace SharedShoppingList.API.Application.Entities
 {
-    public class TokenViewModel
+    public class AuthenticationResult
     {
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }

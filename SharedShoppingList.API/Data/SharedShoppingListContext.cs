@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SharedShoppingList.API.Application.Entities;
+using SharedShoppingList.API.Data.Configuration;
 
 namespace SharedShoppingList.API.Data
 {
     public class SharedShoppingListContext : IdentityDbContext<User, Role, string>
     {
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+
         public SharedShoppingListContext(DbContextOptions<SharedShoppingListContext> options)
             : base(options)
         {
@@ -19,7 +22,7 @@ namespace SharedShoppingList.API.Data
 
         private static void ApplyEntityConfigurations(ModelBuilder builder)
         {
-            // TODO
+            builder.ApplyConfiguration(new RefreshTokenEntityTypeConfiguration());
         }
     }
 }

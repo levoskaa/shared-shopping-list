@@ -5,7 +5,6 @@ using SharedShoppingList.API.Application.Behaviors;
 using SharedShoppingList.API.Data;
 using SharedShoppingList.API.Services;
 using System.Reflection;
-using SharedShoppingList.API.Data;
 
 namespace SharedShoppingList.API.Infrastructure
 {
@@ -29,8 +28,18 @@ namespace SharedShoppingList.API.Infrastructure
                 .AsSelf()
                 .SingleInstance();
 
-            // TokenGenerator
-            builder.RegisterType<TokenGenerator>()
+            // TokenService
+            builder.RegisterType<TokenService>()
+                .AsImplementedInterfaces()
+                .InstancePerDependency();
+
+            // UnitOfWork
+            builder.RegisterType<UnitOfWork>()
+                .AsImplementedInterfaces()
+                .InstancePerDependency();
+
+            // IdentityHelper
+            builder.RegisterType<IdentityHelper>()
                 .AsImplementedInterfaces()
                 .InstancePerDependency();
         }

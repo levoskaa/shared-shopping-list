@@ -9,9 +9,9 @@ namespace SharedShoppingList.API.Application.Validators
         public SignInCommandValidator()
         {
             RuleFor(e => e.Username)
-                .NotEmpty().WithMessage(ValidationErrors.UsernameRequired);
+                .NotEmpty().WithErrorCode(ValidationErrors.UsernameRequired);
             RuleFor(e => e.Password)
-                .NotEmpty().WithMessage(ValidationErrors.PasswordRequired);
+                .NotEmpty().WithErrorCode(ValidationErrors.PasswordRequired);
         }
     }
 }
