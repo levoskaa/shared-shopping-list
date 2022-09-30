@@ -12,14 +12,38 @@ namespace SharedShoppingList.API.Application.Entities
             refreshTokens.Add(refreshToken);
         }
 
-        public void RevokeRefreshToken(RefreshToken refreshToken)
+        public void RemoveRefreshToken(string refreshToken)
+        {
+            var refreshTokenEntity = refreshTokens.SingleOrDefault(token => token.Value == refreshToken);
+            if (refreshTokenEntity != null)
+            {
+                RemoveRefreshToken(refreshTokenEntity);
+            }
+        }
+
+        public void RemoveRefreshToken(RefreshToken refreshToken)
         {
             refreshTokens.Remove(refreshToken);
         }
 
-        public void RevokeAllRefreshTokens()
+        public void RemoveAllRefreshTokens()
         {
             refreshTokens.Clear();
+        }
+
+        public bool VerifyRefreshToken(string refreshToken)
+        {
+            var refreshTokenEntity = refreshTokens.SingleOrDefault(token => token.Value == refreshToken);
+            if (refreshTokenEntity == null)
+            {
+                return false;
+            }
+            bool expired = refreshTokenEntity.ExpiryTime < DateTime.UtcNow;
+            if (expired)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

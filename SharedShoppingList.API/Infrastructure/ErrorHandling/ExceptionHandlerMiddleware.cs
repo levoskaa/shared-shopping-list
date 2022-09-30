@@ -47,6 +47,13 @@ public class ExceptionHandlerMiddleware
                 HttpStatusCode.Forbidden,
                 mapper.Map<ErrorViewModel>(e));
         }
+        catch (UnauthorizedException e)
+        {
+            await SendResponseAsync(
+                httpContext,
+                HttpStatusCode.Unauthorized,
+                mapper.Map<ErrorViewModel>(e));
+        }
         catch (Exception e)
         {
             await SendResponseAsync(

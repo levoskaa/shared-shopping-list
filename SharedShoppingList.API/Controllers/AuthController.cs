@@ -48,6 +48,16 @@ namespace SharedShoppingList.API.Controllers
             return mapper.Map<TokenViewModel>(token);
         }
 
+        [HttpPost("refresh")]
+        [ProducesResponseType(typeof(TokenViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        public async Task<TokenViewModel> RefreshAuth([FromBody] RefreshTokenDto dto)
+        {
+            var refreshAuthCommand = mapper.Map<RefreshAuthCommand>(dto);
+            var token = await mediator.Send(refreshAuthCommand);
+            return mapper.Map<TokenViewModel>(token);
+        }
+
         [Authorize]
         [HttpPost("sign-out")]
         [ProducesResponseType((int)HttpStatusCode.OK)]

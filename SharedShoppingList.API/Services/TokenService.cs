@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using SharedShoppingList.API.Application.Entities;
+using SharedShoppingList.API.Infrastructure.ErrorHandling;
+using SharedShoppingList.API.Infrastructure.Exceptions;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -8,12 +10,12 @@ using System.Text;
 
 namespace SharedShoppingList.API.Services
 {
-    public class TokenGenerator : ITokenGenerator
+    public class TokenService : ITokenService
     {
         private readonly UserManager<User> userManager;
         private readonly IConfiguration configuration;
 
-        public TokenGenerator(
+        public TokenService(
             UserManager<User> userManager,
             IConfiguration configuration)
         {
@@ -59,9 +61,44 @@ namespace SharedShoppingList.API.Services
             var randomNumber = RandomNumberGenerator.GetBytes(64);
             return new RefreshToken
             {
-                Token = Convert.ToBase64String(randomNumber),
+                Value = Convert.ToBase64String(randomNumber),
                 ExpiryTime = DateTime.Now.AddDays(int.Parse(configuration["JWT:RefreshTokenValidityInDays"])),
             };
+        }
+
+        public ClaimsPrincipal GetPrincipalFromExpiredAccessToken(string accessToken)
+        {
+            var signingKey = Encoding.UTF8.GetBytes(configuration["JWT:Secret"]);
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(signingKey),
+                ValidateLifetime = false
+            };
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken securityToken;
+            ClaimsPrincipal principal;
+            try
+            {
+                principal = tokenHandler.ValidateToken(accessToken, tokenValidationParameters,
+                                                           out securityToken);
+            }
+            catch (Exception)
+            {
+                throw new UnauthorizedException("Access token verification failed",
+                    ValidationErrors.AccessTokenVerificatonFailed);
+            }
+            bool algorithmMatches = (securityToken as JwtSecurityToken).Header.Alg
+                .Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
+            if (securityToken is not JwtSecurityToken || !algorithmMatches)
+            {
+                throw new UnauthorizedException("Access token verification failed",
+                    ValidationErrors.AccessTokenVerificatonFailed);
+            }
+
+            return principal;
         }
     }
 }

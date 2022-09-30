@@ -9,7 +9,7 @@ namespace SharedShoppingList.API.Data.Configuration
         public void Configure(EntityTypeBuilder<RefreshToken> builder)
         {
             // Create composite key
-            builder.HasKey(token => new { token.UserId, token.Token });
+            builder.HasKey(token => new { token.UserId, token.Value });
 
             builder.HasOne(token => token.User)
                 .WithMany(user => user.RefreshTokens)

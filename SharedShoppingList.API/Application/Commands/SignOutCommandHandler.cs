@@ -20,10 +20,10 @@ namespace SharedShoppingList.API.Application.Commands
                 .Include(user => user.RefreshTokens)
                 .SingleAsync(user => user.Id == command.UserId, cancellationToken);
             var refreshTokenToRemove = user.RefreshTokens
-                .SingleOrDefault(token => token.Token == command.RefreshToken);
+                .SingleOrDefault(token => token.Value == command.RefreshToken);
             if (refreshTokenToRemove != null)
             {
-                user.RevokeRefreshToken(refreshTokenToRemove);
+                user.RemoveRefreshToken(refreshTokenToRemove);
                 await userManager.UpdateAsync(user);
             }
             return Unit.Value;

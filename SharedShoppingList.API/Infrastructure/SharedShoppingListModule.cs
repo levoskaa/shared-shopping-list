@@ -28,8 +28,8 @@ namespace SharedShoppingList.API.Infrastructure
                 .AsSelf()
                 .SingleInstance();
 
-            // TokenGenerator
-            builder.RegisterType<TokenGenerator>()
+            // TokenService
+            builder.RegisterType<TokenService>()
                 .AsImplementedInterfaces()
                 .InstancePerDependency();
 
