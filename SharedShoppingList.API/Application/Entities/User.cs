@@ -7,6 +7,12 @@ namespace SharedShoppingList.API.Application.Entities
         private readonly List<RefreshToken> refreshTokens = new List<RefreshToken>();
         public virtual IReadOnlyCollection<RefreshToken> RefreshTokens => refreshTokens;
 
+        private readonly List<UserUserGroup> userUserGroups;
+        public virtual IReadOnlyCollection<UserUserGroup> UserUserGroups => userUserGroups;
+
+        private readonly List<UserGroup> groups = new List<UserGroup>();
+        public virtual IReadOnlyCollection<UserGroup> Groups => groups;
+
         public void AddRefreshToken(RefreshToken refreshToken)
         {
             refreshTokens.Add(refreshToken);

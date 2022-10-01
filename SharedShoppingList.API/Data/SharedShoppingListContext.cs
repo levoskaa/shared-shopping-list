@@ -7,6 +7,7 @@ namespace SharedShoppingList.API.Data
 {
     public class SharedShoppingListContext : IdentityDbContext<User, Role, string>
     {
+        public DbSet<UserGroup> UserGroups { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         public SharedShoppingListContext(DbContextOptions<SharedShoppingListContext> options)
@@ -23,6 +24,8 @@ namespace SharedShoppingList.API.Data
         private static void ApplyEntityConfigurations(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new RefreshTokenEntityTypeConfiguration());
+            builder.ApplyConfiguration(new UserEntityTypeConfiguration());
+            builder.ApplyConfiguration(new UserGroupEntityTypeConfiguration());
         }
     }
 }
