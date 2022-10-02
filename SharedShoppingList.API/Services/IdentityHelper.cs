@@ -17,5 +17,11 @@ namespace SharedShoppingList.API.Services
             return httpContextAccessor?.HttpContext?.User
                 .FindFirstValue(JwtRegisteredClaimNames.Sub) ?? "";
         }
+
+        public string GetAuthenticatedUsername()
+        {
+            return httpContextAccessor?.HttpContext?.User
+                .FindFirstValue(ClaimTypes.Name) ?? "";
+        }
     }
 }

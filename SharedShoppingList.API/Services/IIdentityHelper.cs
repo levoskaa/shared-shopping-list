@@ -3,5 +3,6 @@
     public interface IIdentityHelper
     {
         string GetAuthenticatedUserId();
+        string GetAuthenticatedUsername();
     }
 }
