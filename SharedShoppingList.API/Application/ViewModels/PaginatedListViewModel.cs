@@ -1,6 +1,6 @@
-﻿namespace SharedShoppingList.API.Application.Dtos
+﻿namespace SharedShoppingList.API.Application.ViewModels
 {
-    public class PaginatedListDto<T>
+    public class PaginatedListViewModel<T>
     {
         public int PageIndex { get; set; }
         public int TotalPages { get; set; }

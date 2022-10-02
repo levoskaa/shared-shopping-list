@@ -3,8 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedShoppingList.API.Application.Commands;
-using SharedShoppingList.API.Application.Common;
-using SharedShoppingList.API.Application.Dtos;
 using SharedShoppingList.API.Application.ViewModels;
 using SharedShoppingList.API.Services;
 using System.Net;
@@ -31,10 +29,10 @@ namespace SharedShoppingList.API.Controllers
 
         [HttpGet("{username}/groups")]
         [Authorize]
-        [ProducesResponseType(typeof(PaginatedListDto<UserGroupDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(PaginatedListViewModel<UserGroupViewModel>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.Forbidden)]
-        public async Task<PaginatedListDto<UserGroupDto>> GetUserGroups(
+        public async Task<PaginatedListViewModel<UserGroupViewModel>> GetUserGroups(
             [FromRoute] string username,
             [FromQuery] int pageSize = 10,
             [FromQuery] int pageIndex = 1)
@@ -47,7 +45,7 @@ namespace SharedShoppingList.API.Controllers
                 UserId = identityHelper.GetAuthenticatedUserId(),
             };
             var userGroups = await mediator.Send(getUserGroupsCommand);
-            return mapper.Map<PaginatedListDto<UserGroupDto>>(userGroups);
+            return mapper.Map<PaginatedListViewModel<UserGroupViewModel>>(userGroups);
         }
     }
 }

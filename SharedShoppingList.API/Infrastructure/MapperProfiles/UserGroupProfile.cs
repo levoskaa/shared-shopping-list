@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using SharedShoppingList.API.Application.Dtos;
 using SharedShoppingList.API.Application.Entities;
+using SharedShoppingList.API.Application.ViewModels;
 
 namespace SharedShoppingList.API.Infrastructure.MapperProfiles
 {
@@ -8,7 +8,7 @@ namespace SharedShoppingList.API.Infrastructure.MapperProfiles
     {
         public UserGroupProfile()
         {
-            CreateMap<UserGroup, UserGroupDto>()
+            CreateMap<UserGroup, UserGroupViewModel>()
                 .ForMember(
                     dto => dto.MemberCount,
                     options => options.MapFrom(group => group.Members.Count));

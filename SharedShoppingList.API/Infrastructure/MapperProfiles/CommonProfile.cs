@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using SharedShoppingList.API.Application.Common;
-using SharedShoppingList.API.Application.Dtos;
+using SharedShoppingList.API.Application.ViewModels;
 
 namespace SharedShoppingList.API.Infrastructure.MapperProfiles
 {
@@ -8,7 +8,7 @@ namespace SharedShoppingList.API.Infrastructure.MapperProfiles
     {
         public CommonProfile()
         {
-            CreateMap(typeof(PaginatedList<>), typeof(PaginatedListDto<>));
+            CreateMap(typeof(PaginatedList<>), typeof(PaginatedListViewModel<>));
         }
     }
 }
