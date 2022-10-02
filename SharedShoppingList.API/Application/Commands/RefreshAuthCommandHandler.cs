@@ -26,7 +26,7 @@ namespace SharedShoppingList.API.Application.Commands
         {
             var principal = tokenService.GetPrincipalFromExpiredAccessToken(command.AccessToken);
             var userId = principal.Claims
-                .FirstOrDefault(claim => claim.Type.Equals(JwtRegisteredClaimNames.Sub))
+                .FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Sub)
                 ?.Value;
             var user = await userManager.Users
                 .Include(user => user.RefreshTokens)
