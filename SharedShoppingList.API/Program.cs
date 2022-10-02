@@ -14,6 +14,7 @@ using System.Text;
 using System.Reflection;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
+using SharedShoppingList.API.Infrastructure.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -105,6 +106,13 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
     };
 });
+
+// Authorization
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("MatchingUsername", policy => policy.Requirements.Add(new MatchingUsernameRequirement()));
+});
+
 // Don't let claim names to be overwritten
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 

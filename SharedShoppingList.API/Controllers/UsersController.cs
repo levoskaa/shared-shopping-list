@@ -28,12 +28,11 @@ namespace SharedShoppingList.API.Controllers
         }
 
         [HttpGet("{username}/groups")]
-        [Authorize]
+        [Authorize(Policy = "MatchingUsername")]
         [ProducesResponseType(typeof(PaginatedListViewModel<UserGroupViewModel>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.Unauthorized)]
-        [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
         public async Task<PaginatedListViewModel<UserGroupViewModel>> GetUserGroups(
-            [FromRoute] string username,
             [FromQuery] int pageSize = 10,
             [FromQuery] int pageIndex = 1)
         {
@@ -41,7 +40,6 @@ namespace SharedShoppingList.API.Controllers
             {
                 PageSize = pageSize,
                 PageIndex = pageIndex,
-                Username = username,
                 UserId = identityHelper.GetAuthenticatedUserId(),
             };
             var userGroups = await mediator.Send(getUserGroupsCommand);

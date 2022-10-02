@@ -20,10 +20,10 @@ namespace SharedShoppingList.API.Application.Commands
         {
             var user = await userManager.Users
                 .Include(user => user.Groups)
-                .SingleOrDefaultAsync(user => user.Id == command.UserId && user.UserName == command.Username);
+                .SingleOrDefaultAsync(user => user.Id == command.UserId);
             if (user == null)
             {
-                throw new ForbiddenException();
+                throw new EntityNotFoundException("User not found");
             }
             return new PaginatedList<UserGroup>(
                 user.Groups,

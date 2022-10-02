@@ -8,6 +8,5 @@ namespace SharedShoppingList.API.Application.Commands
         PaginationCommand, IRequest<PaginatedList<UserGroup>>
     {
         public string UserId { get; set; }
-        public string Username { get; set; }
     }
 }
