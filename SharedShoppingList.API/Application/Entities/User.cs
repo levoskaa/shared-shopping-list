@@ -5,7 +5,13 @@ namespace SharedShoppingList.API.Application.Entities
     public class User : IdentityUser
     {
         private readonly List<RefreshToken> refreshTokens = new List<RefreshToken>();
-        public IReadOnlyCollection<RefreshToken> RefreshTokens => refreshTokens;
+        public virtual IReadOnlyCollection<RefreshToken> RefreshTokens => refreshTokens;
+
+        private readonly List<UserUserGroup> userUserGroups;
+        public virtual IReadOnlyCollection<UserUserGroup> UserUserGroups => userUserGroups;
+
+        private readonly List<UserGroup> groups = new List<UserGroup>();
+        public virtual IReadOnlyCollection<UserGroup> Groups => groups;
 
         public void AddRefreshToken(RefreshToken refreshToken)
         {
