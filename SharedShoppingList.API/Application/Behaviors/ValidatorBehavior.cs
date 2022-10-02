@@ -14,7 +14,7 @@ namespace SharedShoppingList.API.Application.Behaviors
             this.validators = validators;
         }
 
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             var failures = validators
                 .Select(v => v.Validate(request))
