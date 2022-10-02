@@ -50,7 +50,7 @@ namespace SharedShoppingList.API.Controllers
 
         [HttpPost("refresh")]
         [ProducesResponseType(typeof(TokenViewModel), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.Unauthorized)]
         public async Task<TokenViewModel> RefreshAuth([FromBody] RefreshTokenDto dto)
         {
             var refreshAuthCommand = mapper.Map<RefreshAuthCommand>(dto);
@@ -61,7 +61,7 @@ namespace SharedShoppingList.API.Controllers
         [Authorize]
         [HttpPost("sign-out")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.Unauthorized)]
         public async Task SignOut([FromBody] SignOutDto dto)
         {
             var signOutCommand = mapper.Map<SignOutCommand>(dto);
@@ -72,7 +72,7 @@ namespace SharedShoppingList.API.Controllers
         [Authorize]
         [HttpPost("revoke-all")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.Unauthorized)]
         public async Task RevokeAllRefreshTokens()
         {
             var revokeAllRefreshTokensCommand = new RevokeAllRefreshTokensCommand

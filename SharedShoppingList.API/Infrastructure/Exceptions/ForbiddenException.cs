@@ -3,6 +3,7 @@
     public class ForbiddenException : SharedShoppingListException
     {
         public ForbiddenException()
+            : base("Forbidden")
         {
         }
 

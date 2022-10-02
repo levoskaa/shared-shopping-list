@@ -13,14 +13,16 @@ namespace SharedShoppingList.API.Application.Common
 
         public PaginatedList(IEnumerable<T> items, int count, int pageSize, int pageIndex)
         {
-            PageIndex = pageIndex;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            PageIndex = Math.Min(pageIndex, TotalPages);
             this.items.AddRange(items);
         }
 
         public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageSize, int pageIndex)
         {
             var count = await source.CountAsync();
+            var totalPages = (int)Math.Ceiling(count / (double)pageSize);
+            pageIndex = Math.Min(pageIndex, totalPages);
             var items = await source
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize)
