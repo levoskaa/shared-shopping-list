@@ -53,7 +53,7 @@ namespace SharedShoppingList.API.Data.Repositories
             CancellationToken cancellationToken = default,
             params string[] includeProperties)
         {
-            var entity = await dbSet.FindAsync(id, cancellationToken);
+            var entity = await dbSet.FindAsync(id);
             if (entity != null)
             {
                 foreach (var includeProperty in includeProperties)

@@ -28,6 +28,19 @@ namespace SharedShoppingList.API.Controllers
             this.mapper = maper;
         }
 
+        [HttpPost("{username}/groups")]
+        [Authorize(Policy = "MatchingUsername")]
+        [ProducesResponseType(typeof(UserGroupViewModel), (int)HttpStatusCode.Created)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        public async Task<UserGroupViewModel> CreateUserGroup([FromBody] CreateUserGroupDto dto)
+        {
+            var createUserGroupCommand = mapper.Map<CreateUserGroupCommand>(dto);
+            createUserGroupCommand.UserId = identityHelper.GetAuthenticatedUserId();
+            var createdUserGroup = await mediator.Send(createUserGroupCommand);
+            return mapper.Map<UserGroupViewModel>(createdUserGroup);
+        }
+
         [HttpGet("{username}/groups")]
         [Authorize(Policy = "MatchingUsername")]
         [ProducesResponseType(typeof(PaginatedListViewModel<UserGroupViewModel>), (int)HttpStatusCode.OK)]

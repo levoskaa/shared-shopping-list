@@ -51,5 +51,10 @@ namespace SharedShoppingList.API.Application.Entities
             }
             return true;
         }
+
+        public void AddUserGroup(UserGroup group)
+        {
+            groups.Add(group);
+        }
     }
 }

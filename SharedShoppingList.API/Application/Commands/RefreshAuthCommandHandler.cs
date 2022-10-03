@@ -33,7 +33,8 @@ namespace SharedShoppingList.API.Application.Commands
                 .FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Sub)
                 ?.Value;
             var user = await userRepository.GetByIdAsync(
-                userId, cancellationToken,
+                userId,
+                cancellationToken,
                 nameof(User.RefreshTokens));
 
             if (!user.VerifyRefreshToken(command.RefreshToken))
