@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SharedShoppingList.API.Application.Common;
 using SharedShoppingList.API.Application.Entities;
 using SharedShoppingList.API.Infrastructure.ErrorHandling;
 using SharedShoppingList.API.Infrastructure.Exceptions;

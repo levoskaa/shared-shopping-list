@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SharedShoppingList.API.Application.Entities;
+using SharedShoppingList.API.Application.Common;
 
 namespace SharedShoppingList.API.Application.Commands
 {
