@@ -52,9 +52,8 @@ namespace SharedShoppingList.API.Infrastructure
                 .SingleInstance();
 
             // Repositores
-            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
-                .Where(type => type.IsClosedTypeOf(typeof(IRepository<>)))
-                .AsImplementedInterfaces()
+            builder.RegisterGeneric(typeof(Repository<>))
+                .As(typeof(IRepository<>))
                 .InstancePerDependency();
         }
     }
