@@ -6,12 +6,12 @@ namespace SharedShoppingList.API.Data.Repositories
     {
         void Insert(TEntity entity);
 
-        IEnumerable<TEntity> Get(
+        Task<IEnumerable<TEntity>> GetAsync(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "");
 
-        TEntity GetByID(object id);
+        Task<TEntity> GetByIdAsync(object id);
 
         void Update(TEntity entityToUpdate);
 
