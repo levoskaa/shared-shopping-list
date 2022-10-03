@@ -37,6 +37,10 @@ namespace SharedShoppingList.API.Application.Commands
                 cancellationToken,
                 nameof(User.RefreshTokens));
 
+            if (user == null)
+            {
+                throw new EntityNotFoundException("User not found");
+            }
             if (!user.VerifyRefreshToken(command.RefreshToken))
             {
                 throw new UnauthorizedException("Refresh token is invalid",

@@ -2,6 +2,7 @@
 using SharedShoppingList.API.Application.Entities;
 using SharedShoppingList.API.Data;
 using SharedShoppingList.API.Data.Repositories;
+using SharedShoppingList.API.Infrastructure.Exceptions;
 
 namespace SharedShoppingList.API.Application.Commands
 {
@@ -24,6 +25,10 @@ namespace SharedShoppingList.API.Application.Commands
                 command.UserId,
                 cancellationToken,
                 nameof(User.RefreshTokens));
+            if (user == null)
+            {
+                throw new EntityNotFoundException("User not found");
+            }
             var refreshTokenToRemove = user.RefreshTokens
                 .SingleOrDefault(token => token.Value == command.RefreshToken);
             if (refreshTokenToRemove != null)
