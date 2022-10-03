@@ -23,7 +23,7 @@ namespace SharedShoppingList.API.Data.Repositories
         public virtual async Task<IEnumerable<TEntity>> GetAsync(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "")
+            params string[] includeProperties)
         {
             IQueryable<TEntity> query = dbSet;
 
@@ -32,8 +32,7 @@ namespace SharedShoppingList.API.Data.Repositories
                 query = query.Where(filter);
             }
 
-            foreach (var includeProperty in includeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var includeProperty in includeProperties)
             {
                 query = query.Include(includeProperty);
             }
@@ -48,9 +47,16 @@ namespace SharedShoppingList.API.Data.Repositories
             }
         }
 
-        public virtual async Task<TEntity> GetByIdAsync(object id)
+        public virtual async Task<TEntity> GetByIdAsync(object id, params string[] includeProperties)
         {
-            return await dbSet.FindAsync(id);
+            var entity = await dbSet.FindAsync(id);
+            foreach (var includeProperty in includeProperties)
+            {
+                context.Entry(entity)
+                    .Navigation(includeProperty)
+                    .Load();
+            }
+            return entity;
         }
 
         public virtual void Update(TEntity entityToUpdate)

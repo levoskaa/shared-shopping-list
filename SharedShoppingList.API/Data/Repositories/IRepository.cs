@@ -9,9 +9,9 @@ namespace SharedShoppingList.API.Data.Repositories
         Task<IEnumerable<TEntity>> GetAsync(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "");
+            params string[] includeProperties);
 
-        Task<TEntity> GetByIdAsync(object id);
+        Task<TEntity> GetByIdAsync(object id, params string[] includeProperties);
 
         void Update(TEntity entityToUpdate);
 
