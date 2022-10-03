@@ -50,11 +50,14 @@ namespace SharedShoppingList.API.Data.Repositories
         public virtual async Task<TEntity> GetByIdAsync(object id, params string[] includeProperties)
         {
             var entity = await dbSet.FindAsync(id);
-            foreach (var includeProperty in includeProperties)
+            if (entity != null)
             {
-                context.Entry(entity)
-                    .Navigation(includeProperty)
-                    .Load();
+                foreach (var includeProperty in includeProperties)
+                {
+                    context.Entry(entity)
+                        .Navigation(includeProperty)
+                        .Load();
+                }
             }
             return entity;
         }
