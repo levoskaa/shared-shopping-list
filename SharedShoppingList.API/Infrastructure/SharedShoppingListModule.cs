@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using SharedShoppingList.API.Application.Behaviors;
 using SharedShoppingList.API.Data;
+using SharedShoppingList.API.Data.Repositories;
 using SharedShoppingList.API.Services;
 using System.Reflection;
 
@@ -49,6 +50,12 @@ namespace SharedShoppingList.API.Infrastructure
                 .AssignableTo<IAuthorizationHandler>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
+
+            // Repositores
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+                .Where(type => type.IsClosedTypeOf(typeof(IRepository<>)))
+                .AsImplementedInterfaces()
+                .InstancePerDependency();
         }
     }
 }
