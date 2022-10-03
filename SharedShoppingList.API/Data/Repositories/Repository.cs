@@ -23,6 +23,7 @@ namespace SharedShoppingList.API.Data.Repositories
         public virtual async Task<IEnumerable<TEntity>> GetAsync(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            CancellationToken cancellationToken = default,
             params string[] includeProperties)
         {
             IQueryable<TEntity> query = dbSet;
@@ -39,24 +40,27 @@ namespace SharedShoppingList.API.Data.Repositories
 
             if (orderBy != null)
             {
-                return await orderBy(query).ToListAsync();
+                return await orderBy(query).ToListAsync(cancellationToken);
             }
             else
             {
-                return await query.ToListAsync();
+                return await query.ToListAsync(cancellationToken);
             }
         }
 
-        public virtual async Task<TEntity> GetByIdAsync(object id, params string[] includeProperties)
+        public virtual async Task<TEntity> GetByIdAsync(
+            object id,
+            CancellationToken cancellationToken = default,
+            params string[] includeProperties)
         {
-            var entity = await dbSet.FindAsync(id);
+            var entity = await dbSet.FindAsync(id, cancellationToken);
             if (entity != null)
             {
                 foreach (var includeProperty in includeProperties)
                 {
-                    context.Entry(entity)
+                    await context.Entry(entity)
                         .Navigation(includeProperty)
-                        .Load();
+                        .LoadAsync(cancellationToken);
                 }
             }
             return entity;

@@ -1,26 +1,32 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using SharedShoppingList.API.Application.Entities;
+using SharedShoppingList.API.Data;
+using SharedShoppingList.API.Data.Repositories;
 
 namespace SharedShoppingList.API.Application.Commands
 {
     public class RevokeAllRefreshTokensCommandHandler : IRequestHandler<RevokeAllRefreshTokensCommand>
     {
-        private readonly UserManager<User> userManager;
+        private readonly IRepository<User> userRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public RevokeAllRefreshTokensCommandHandler(UserManager<User> userManager)
+        public RevokeAllRefreshTokensCommandHandler(
+            IRepository<User> userRepository,
+            IUnitOfWork unitOfWork)
         {
-            this.userManager = userManager;
+            this.userRepository = userRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(RevokeAllRefreshTokensCommand command, CancellationToken cancellationToken)
         {
-            var user = await userManager.Users
-                .Include(user => user.RefreshTokens)
-                .SingleAsync(user => user.Id == command.UserId, cancellationToken);
+            var user = await userRepository.GetByIdAsync(
+                command.UserId,
+                cancellationToken,
+                nameof(User.RefreshTokens));
             user.RemoveAllRefreshTokens();
-            await userManager.UpdateAsync(user);
+            userRepository.Update(user);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
     }

@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using SharedShoppingList.API.Application.Common;
 using SharedShoppingList.API.Application.Entities;
+using SharedShoppingList.API.Data;
+using SharedShoppingList.API.Data.Repositories;
 using SharedShoppingList.API.Infrastructure.ErrorHandling;
 using SharedShoppingList.API.Infrastructure.Exceptions;
 using SharedShoppingList.API.Services;
@@ -12,15 +12,18 @@ namespace SharedShoppingList.API.Application.Commands
 {
     public class RefreshAuthCommandHandler : IRequestHandler<RefreshAuthCommand, AuthenticationResult>
     {
-        private readonly UserManager<User> userManager;
+        private readonly IRepository<User> userRepository;
         private readonly ITokenService tokenService;
+        private readonly IUnitOfWork unitOfWork;
 
         public RefreshAuthCommandHandler(
-            UserManager<User> userManager,
-            ITokenService tokenService)
+            IRepository<User> userRepository,
+            ITokenService tokenService,
+            IUnitOfWork unitOfWork)
         {
-            this.userManager = userManager;
+            this.userRepository = userRepository;
             this.tokenService = tokenService;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<AuthenticationResult> Handle(RefreshAuthCommand command, CancellationToken cancellationToken)
@@ -29,9 +32,9 @@ namespace SharedShoppingList.API.Application.Commands
             var userId = principal.Claims
                 .FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Sub)
                 ?.Value;
-            var user = await userManager.Users
-                .Include(user => user.RefreshTokens)
-                .SingleAsync(user => user.Id == userId, cancellationToken);
+            var user = await userRepository.GetByIdAsync(
+                userId, cancellationToken,
+                nameof(User.RefreshTokens));
 
             if (!user.VerifyRefreshToken(command.RefreshToken))
             {
@@ -43,7 +46,8 @@ namespace SharedShoppingList.API.Application.Commands
             var newRefreshToken = tokenService.GenerateRefreshToken();
             user.RemoveRefreshToken(command.RefreshToken);
             user.AddRefreshToken(newRefreshToken);
-            await userManager.UpdateAsync(user);
+            userRepository.Update(user);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return new AuthenticationResult
             {
