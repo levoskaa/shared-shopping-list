@@ -32,6 +32,7 @@ namespace SharedShoppingList.API.Application.Commands
             var userGroup = new UserGroup
             {
                 Name = command.Name,
+                OwnerId = command.UserId,
             };
             user.AddUserGroup(userGroup);
             await unitOfWork.SaveChangesAsync(cancellationToken);
