@@ -13,8 +13,7 @@
         private readonly List<ShoppingListEntry> shoppingListEntries = new List<ShoppingListEntry>();
         public virtual IReadOnlyCollection<ShoppingListEntry> ShoppingListEntries => shoppingListEntries;
 
-        // TODO: uncomment and configure
-        //public int OwnerId { get; set; }
-        //public virtual User Owner { get; set; }
+        public string OwnerId { get; set; }
+        public virtual User Owner { get; set; }
     }
 }

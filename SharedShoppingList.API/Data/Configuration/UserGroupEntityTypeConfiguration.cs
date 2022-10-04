@@ -13,6 +13,13 @@ namespace SharedShoppingList.API.Data.Configuration
                 .HasMany(group => group.ShoppingListEntries)
                 .WithOne()
                 .HasForeignKey(entry => entry.GroupId);
+
+            // Many-to-one relationship between UserGroups and Users
+            builder
+                .HasOne(group => group.Owner)
+                .WithMany()
+                .HasForeignKey(group => group.OwnerId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
