@@ -111,6 +111,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("MatchingUsername", policy => policy.Requirements.Add(new MatchingUsernameRequirement()));
+    options.AddPolicy("UserGroupOwner", policy => policy.Requirements.Add(new UserGroupOwnerRequirement()));
 });
 
 // Don't let claim names to be overwritten

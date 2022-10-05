@@ -19,7 +19,7 @@ namespace SharedShoppingList.API.Data.Configuration
                 .HasOne(group => group.Owner)
                 .WithMany()
                 .HasForeignKey(group => group.OwnerId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
