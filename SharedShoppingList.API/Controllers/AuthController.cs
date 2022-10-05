@@ -29,6 +29,7 @@ namespace SharedShoppingList.API.Controllers
         }
 
         [HttpPost("sign-in")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(TokenViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.BadRequest)]
         public async Task<TokenViewModel> SignIn([FromBody] SignInDto dto)
@@ -39,6 +40,7 @@ namespace SharedShoppingList.API.Controllers
         }
 
         [HttpPost("register")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(TokenViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.BadRequest)]
         public async Task<TokenViewModel> Register([FromBody] RegisterDto dto)
@@ -58,7 +60,6 @@ namespace SharedShoppingList.API.Controllers
             return mapper.Map<TokenViewModel>(token);
         }
 
-        [Authorize]
         [HttpPost("sign-out")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.Unauthorized)]
@@ -69,7 +70,6 @@ namespace SharedShoppingList.API.Controllers
             await mediator.Send(signOutCommand);
         }
 
-        [Authorize]
         [HttpPost("revoke-all")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.Unauthorized)]

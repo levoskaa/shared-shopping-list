@@ -15,6 +15,8 @@ using System.Reflection;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using SharedShoppingList.API.Infrastructure.Authorization;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -35,7 +37,14 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
     });
 
 // Controllers
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    // Require authentication by default on all endpoints
+    var policy = new AuthorizationPolicyBuilder()
+                     .RequireAuthenticatedUser()
+                     .Build();
+    options.Filters.Add(new AuthorizeFilter(policy));
+});
 
 // Swagger - more about configuration at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
