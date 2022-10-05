@@ -9,58 +9,53 @@ using SharedShoppingList.API.Services;
 
 namespace SharedShoppingList.API.Application.Commands
 {
-    public class DeleteUserGroupCommandHandler : IRequestHandler<DeleteUserGroupCommand>
+    public class CreateShoppingListEntryCommandHandler
+        : IRequestHandler<CreateShoppingListEntryCommand, ShoppingListEntry>
     {
-        private readonly IRepository<User> userRepository;
         private readonly IRepository<UserGroup> userGroupRepository;
-        private readonly IAuthorizationService authorizationService;
         private readonly IIdentityHelper identityHelper;
+        private readonly IAuthorizationService authorizationService;
         private readonly IUnitOfWork unitOfWork;
 
-        public DeleteUserGroupCommandHandler(
-            IRepository<User> userRepository,
+        public CreateShoppingListEntryCommandHandler(
             IRepository<UserGroup> userGroupRepository,
-            IAuthorizationService authorizationService,
             IIdentityHelper identityHelper,
+            IAuthorizationService authorizationService,
             IUnitOfWork unitOfWork)
         {
-            this.userRepository = userRepository;
             this.userGroupRepository = userGroupRepository;
-            this.authorizationService = authorizationService;
             this.identityHelper = identityHelper;
+            this.authorizationService = authorizationService;
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<Unit> Handle(DeleteUserGroupCommand command, CancellationToken cancellationToken)
+        public async Task<ShoppingListEntry> Handle(CreateShoppingListEntryCommand command, CancellationToken cancellationToken)
         {
-            var user = await userRepository.GetByIdAsync(
-                command.UserId,
-                cancellationToken,
-                nameof(User.Groups));
-            var groupToDelete = user.Groups.SingleOrDefault(group => group.Id == command.UserGroupId);
-
-            if (user == null)
+            var userGroup = await userGroupRepository.GetByIdAsync(
+                command.GroupId,
+                cancellationToken);
+            if (userGroup == null)
             {
-                throw new EntityNotFoundException("User not found");
-            }
-            if (groupToDelete == null)
-            {
-                return Unit.Value;
+                throw new EntityNotFoundException("UserGroup not found");
             }
 
             var authorizationResult = await authorizationService.AuthorizeAsync(
                 identityHelper.ClaimsPrincipal,
-                groupToDelete,
-                new UserGroupOwnerRequirement());
+                userGroup,
+                new UserGroupMemberRequirement());
             if (!authorizationResult.Succeeded)
             {
                 throw new ForbiddenException();
             }
 
-            userGroupRepository.Delete(groupToDelete);
+            var shoppingListEntry = new ShoppingListEntry
+            {
+                Name = command.Name,
+                Quantity = command.Quantity
+            };
+            userGroup.AddShoppingListEntry(shoppingListEntry);
             await unitOfWork.SaveChangesAsync(cancellationToken);
-
-            return Unit.Value;
+            return shoppingListEntry;
         }
     }
 }

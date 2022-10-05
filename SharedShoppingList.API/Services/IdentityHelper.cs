@@ -7,21 +7,23 @@ namespace SharedShoppingList.API.Services
     {
         private readonly IHttpContextAccessor httpContextAccessor;
 
+        public ClaimsPrincipal? ClaimsPrincipal => httpContextAccessor.HttpContext?.User;
+
         public IdentityHelper(IHttpContextAccessor httpContextAccessor)
         {
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        public string GetAuthenticatedUserId()
+        public string? GetAuthenticatedUserId()
         {
             return httpContextAccessor?.HttpContext?.User
-                .FindFirstValue(JwtRegisteredClaimNames.Sub) ?? "";
+                .FindFirstValue(JwtRegisteredClaimNames.Sub);
         }
 
-        public string GetAuthenticatedUsername()
+        public string? GetAuthenticatedUsername()
         {
             return httpContextAccessor?.HttpContext?.User
-                .FindFirstValue(ClaimTypes.Name) ?? "";
+                .FindFirstValue(ClaimTypes.Name);
         }
     }
 }

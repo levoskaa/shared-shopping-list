@@ -4,13 +4,13 @@ namespace SharedShoppingList.API.Application.Entities
 {
     public class User : IdentityUser
     {
-        private readonly List<RefreshToken> refreshTokens = new List<RefreshToken>();
+        private readonly List<RefreshToken> refreshTokens = new();
         public virtual IReadOnlyCollection<RefreshToken> RefreshTokens => refreshTokens;
 
-        private readonly List<UserUserGroup> userUserGroups;
+        private readonly List<UserUserGroup> userUserGroups = new();
         public virtual IReadOnlyCollection<UserUserGroup> UserUserGroups => userUserGroups;
 
-        private readonly List<UserGroup> groups = new List<UserGroup>();
+        private readonly List<UserGroup> groups = new();
         public virtual IReadOnlyCollection<UserGroup> Groups => groups;
 
         public void AddRefreshToken(RefreshToken refreshToken)
@@ -55,6 +55,11 @@ namespace SharedShoppingList.API.Application.Entities
         public void AddUserGroup(UserGroup group)
         {
             groups.Add(group);
+        }
+
+        public bool IsMemberOfGroup(UserGroup group)
+        {
+            return groups.Any(g => g.Id == group.Id);
         }
     }
 }

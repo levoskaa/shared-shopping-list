@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.IdentityModel.JsonWebTokens;
 using SharedShoppingList.API.Application.Entities;
 using SharedShoppingList.API.Services;
 
