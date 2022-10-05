@@ -38,6 +38,7 @@ namespace SharedShoppingList.API.Controllers
             var createUserGroupCommand = mapper.Map<CreateUserGroupCommand>(dto);
             createUserGroupCommand.UserId = identityHelper.GetAuthenticatedUserId();
             var createdUserGroup = await mediator.Send(createUserGroupCommand);
+            HttpContext.Response.StatusCode = (int)HttpStatusCode.Created;
             return mapper.Map<UserGroupViewModel>(createdUserGroup);
         }
 
