@@ -33,6 +33,7 @@ namespace SharedShoppingList.API.Controllers
         [ProducesResponseType(typeof(UserGroupViewModel), (int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<UserGroupViewModel> CreateUserGroup([FromBody] CreateUserGroupDto dto)
         {
             var createUserGroupCommand = mapper.Map<CreateUserGroupCommand>(dto);
@@ -47,6 +48,7 @@ namespace SharedShoppingList.API.Controllers
         [ProducesResponseType(typeof(PaginatedListViewModel<UserGroupViewModel>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<PaginatedListViewModel<UserGroupViewModel>> GetUserGroups(
             [FromQuery] int pageSize = 10,
             [FromQuery] int pageIndex = 1)
@@ -66,6 +68,7 @@ namespace SharedShoppingList.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task DeleteUserGroup([FromRoute] int userGroupId)
         {
             var deleteUserGroupCommand = new DeleteUserGroupCommand

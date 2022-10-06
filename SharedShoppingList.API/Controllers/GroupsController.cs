@@ -28,6 +28,7 @@ namespace SharedShoppingList.API.Controllers
         [ProducesResponseType(typeof(ShoppingListEntryViewModel), (int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<ShoppingListEntryViewModel> CreateShoppingListEntry(
             [FromRoute] int groupId,
             [FromBody] CreateShoppingListEntryDto dto)
@@ -37,6 +38,6 @@ namespace SharedShoppingList.API.Controllers
             var createdShoppingListEntry = await mediator.Send(createShoppingListEntryCommand);
             HttpContext.Response.StatusCode = (int)HttpStatusCode.Created;
             return mapper.Map<ShoppingListEntryViewModel>(createdShoppingListEntry);
-        }
+        }        
     }
 }
