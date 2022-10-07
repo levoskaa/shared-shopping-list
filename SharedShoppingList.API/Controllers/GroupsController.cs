@@ -62,5 +62,22 @@ namespace SharedShoppingList.API.Controllers
             var shoppingListEntries = await mediator.Send(getShoppingListEntriesCommand);
             return mapper.Map<PaginatedListViewModel<ShoppingListEntryViewModel>>(shoppingListEntries);
         }
+
+        [HttpPut("{groupId}/shooping-list-entries/{shoppingListEntryId}")]
+        [ProducesResponseType(typeof(ShoppingListEntryViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<ShoppingListEntryViewModel> UpdateShoppingListEntry(
+            [FromRoute] int groupId,
+            [FromRoute] int shoppingListEntryId,
+            [FromBody] UpdateShoppingListEntryDto dto)
+        {
+            var updateShoppingListEntryCommand = mapper.Map<UpdateShoppingListEntryCommand>(dto);
+            updateShoppingListEntryCommand.ShoppingListEntryId = shoppingListEntryId;
+            updateShoppingListEntryCommand.GroupId = groupId;
+            var updatedShoppingListEntry = await mediator.Send(updateShoppingListEntryCommand);
+            return mapper.Map<ShoppingListEntryViewModel>(updatedShoppingListEntry);
+        }
     }
 }

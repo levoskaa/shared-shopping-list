@@ -12,6 +12,7 @@ namespace SharedShoppingList.API.Infrastructure.MapperProfiles
         {
             CreateMap<CreateShoppingListEntryDto, CreateShoppingListEntryCommand>();
             CreateMap<ShoppingListEntry, ShoppingListEntryViewModel>();
+            CreateMap<UpdateShoppingListEntryDto, UpdateShoppingListEntryCommand>();
         }
     }
 }
