@@ -30,7 +30,6 @@ namespace SharedShoppingList.API.Application.Commands
                 throw new EntityNotFoundException("User not found");
             }
             user.RemoveAllRefreshTokens();
-            userRepository.Update(user);
             await unitOfWork.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }

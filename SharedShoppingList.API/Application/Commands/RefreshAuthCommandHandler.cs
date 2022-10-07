@@ -51,7 +51,6 @@ namespace SharedShoppingList.API.Application.Commands
             var newRefreshToken = tokenService.GenerateRefreshToken();
             user.RemoveRefreshToken(command.RefreshToken);
             user.AddRefreshToken(newRefreshToken);
-            userRepository.Update(user);
             await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return new AuthenticationResult

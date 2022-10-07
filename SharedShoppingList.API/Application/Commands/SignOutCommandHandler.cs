@@ -34,7 +34,6 @@ namespace SharedShoppingList.API.Application.Commands
             if (refreshTokenToRemove != null)
             {
                 user.RemoveRefreshToken(refreshTokenToRemove);
-                userRepository.Update(user);
                 await unitOfWork.SaveChangesAsync(cancellationToken);
             }
             return Unit.Value;
