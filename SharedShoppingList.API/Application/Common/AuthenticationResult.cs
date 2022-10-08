@@ -1,4 +1,4 @@
-﻿namespace SharedShoppingList.API.Application.Entities
+﻿namespace SharedShoppingList.API.Application.Common
 {
     public class AuthenticationResult
     {

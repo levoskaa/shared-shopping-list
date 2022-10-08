@@ -1,7 +1,11 @@
-﻿namespace SharedShoppingList.API.Services
+﻿using System.Security.Claims;
+
+namespace SharedShoppingList.API.Services
 {
     public interface IIdentityHelper
     {
-        string GetAuthenticatedUserId();
+        ClaimsPrincipal? ClaimsPrincipal { get; }
+        string? GetAuthenticatedUserId();
+        string? GetAuthenticatedUsername();
     }
 }

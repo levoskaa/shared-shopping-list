@@ -29,6 +29,7 @@ namespace SharedShoppingList.API.Controllers
         }
 
         [HttpPost("sign-in")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(TokenViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.BadRequest)]
         public async Task<TokenViewModel> SignIn([FromBody] SignInDto dto)
@@ -39,6 +40,7 @@ namespace SharedShoppingList.API.Controllers
         }
 
         [HttpPost("register")]
+        [AllowAnonymous]
         [ProducesResponseType(typeof(TokenViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.BadRequest)]
         public async Task<TokenViewModel> Register([FromBody] RegisterDto dto)
@@ -50,7 +52,7 @@ namespace SharedShoppingList.API.Controllers
 
         [HttpPost("refresh")]
         [ProducesResponseType(typeof(TokenViewModel), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.Unauthorized)]
         public async Task<TokenViewModel> RefreshAuth([FromBody] RefreshTokenDto dto)
         {
             var refreshAuthCommand = mapper.Map<RefreshAuthCommand>(dto);
@@ -58,10 +60,9 @@ namespace SharedShoppingList.API.Controllers
             return mapper.Map<TokenViewModel>(token);
         }
 
-        [Authorize]
         [HttpPost("sign-out")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.Unauthorized)]
         public async Task SignOut([FromBody] SignOutDto dto)
         {
             var signOutCommand = mapper.Map<SignOutCommand>(dto);
@@ -69,10 +70,9 @@ namespace SharedShoppingList.API.Controllers
             await mediator.Send(signOutCommand);
         }
 
-        [Authorize]
         [HttpPost("revoke-all")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.Unauthorized)]
         public async Task RevokeAllRefreshTokens()
         {
             var revokeAllRefreshTokensCommand = new RevokeAllRefreshTokensCommand

@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
+using SharedShoppingList.API.Application.Common;
 using SharedShoppingList.API.Application.Entities;
+using SharedShoppingList.API.Data;
 using SharedShoppingList.API.Infrastructure.ErrorHandling;
 using SharedShoppingList.API.Infrastructure.Exceptions;
 using SharedShoppingList.API.Services;
@@ -12,13 +14,16 @@ namespace SharedShoppingList.API.Application.Commands
     {
         private readonly UserManager<User> userManager;
         private readonly ITokenService tokenService;
+        private readonly IUnitOfWork unitOfWork;
 
         public CreateUserCommandHandler(
             UserManager<User> userManager,
-            ITokenService tokenService)
+            ITokenService tokenService,
+            IUnitOfWork unitOfWork)
         {
             this.userManager = userManager;
             this.tokenService = tokenService;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<AuthenticationResult> Handle(CreateUserCommand command, CancellationToken cancellationToken)
@@ -43,9 +48,8 @@ namespace SharedShoppingList.API.Application.Commands
 
             var accessToken = await tokenService.GenerateAccessTokenAsync(user);
             var refreshToken = tokenService.GenerateRefreshToken();
-
             user.AddRefreshToken(refreshToken);
-            await userManager.UpdateAsync(user);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
 
             return new AuthenticationResult
             {

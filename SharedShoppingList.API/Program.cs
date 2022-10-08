@@ -14,6 +14,9 @@ using System.Text;
 using System.Reflection;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
+using SharedShoppingList.API.Infrastructure.Authorization;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -34,7 +37,14 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
     });
 
 // Controllers
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    // Require authentication by default on all endpoints
+    var policy = new AuthorizationPolicyBuilder()
+                     .RequireAuthenticatedUser()
+                     .Build();
+    options.Filters.Add(new AuthorizeFilter(policy));
+});
 
 // Swagger - more about configuration at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -105,6 +115,14 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
     };
 });
+
+// Authorization
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("MatchingUsername", policy => policy.Requirements.Add(new MatchingUsernameRequirement()));
+    options.AddPolicy("UserGroupOwner", policy => policy.Requirements.Add(new UserGroupOwnerRequirement()));
+});
+
 // Don't let claim names to be overwritten
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 

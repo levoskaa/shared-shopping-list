@@ -4,17 +4,25 @@
     {
         public string Name { get; set; }
 
-        private readonly List<UserUserGroup> userUserGroups = new List<UserUserGroup>();
+        private readonly List<UserUserGroup> userUserGroups = new();
         public virtual IReadOnlyCollection<UserUserGroup> UserUserGroups => userUserGroups;
 
-        private readonly List<User> members = new List<User>();
+        private readonly List<User> members = new();
         public virtual IReadOnlyCollection<User> Members => members;
 
-        private readonly List<ShoppingListEntry> shoppingListEntries = new List<ShoppingListEntry>();
+        private readonly List<ShoppingListEntry> shoppingListEntries = new();
         public virtual IReadOnlyCollection<ShoppingListEntry> ShoppingListEntries => shoppingListEntries;
 
-        // TODO: uncomment and configure
-        //public int OwnerId { get; set; }
-        //public virtual User Owner { get; set; }
+        public string OwnerId { get; set; }
+        public virtual User Owner { get; set; }
+
+        public void AddShoppingListEntry(ShoppingListEntry shoppingListEntry)
+        {
+            shoppingListEntries.Add(shoppingListEntry);
+        }
+        public void RemoveShoppingListEntry(ShoppingListEntry shoppingListEntry)
+        {
+            shoppingListEntries.Remove(shoppingListEntry);
+        }
     }
 }

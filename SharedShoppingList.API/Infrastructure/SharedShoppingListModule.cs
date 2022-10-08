@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using SharedShoppingList.API.Application.Behaviors;
 using SharedShoppingList.API.Data;
+using SharedShoppingList.API.Data.Repositories;
 using SharedShoppingList.API.Services;
 using System.Reflection;
 
@@ -41,6 +43,17 @@ namespace SharedShoppingList.API.Infrastructure
             // IdentityHelper
             builder.RegisterType<IdentityHelper>()
                 .AsImplementedInterfaces()
+                .InstancePerDependency();
+
+            // AuthorizationHandlers
+            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+                .AssignableTo<IAuthorizationHandler>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+
+            // Repositores
+            builder.RegisterGeneric(typeof(Repository<>))
+                .As(typeof(IRepository<>))
                 .InstancePerDependency();
         }
     }

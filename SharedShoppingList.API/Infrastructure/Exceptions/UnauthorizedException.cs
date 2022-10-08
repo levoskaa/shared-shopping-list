@@ -3,6 +3,7 @@
     public class UnauthorizedException : SharedShoppingListException
     {
         public UnauthorizedException()
+            : base("Unauthorized")
         {
         }
 
