@@ -17,6 +17,11 @@ namespace SharedShoppingList.API.Data.Repositories
             CancellationToken cancellationToken = default,
             params string[] includeProperties);
 
+        Task LoadRelatedEntitiesAsync(
+            TEntity entity,
+            CancellationToken cancellationToken = default,
+            params string[] includeProperties);
+
         void Update(TEntity entityToUpdate);
 
         void Delete(object id);

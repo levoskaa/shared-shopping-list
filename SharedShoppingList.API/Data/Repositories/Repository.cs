@@ -56,14 +56,22 @@ namespace SharedShoppingList.API.Data.Repositories
             var entity = await dbSet.FindAsync(id);
             if (entity != null)
             {
-                foreach (var includeProperty in includeProperties)
-                {
-                    await context.Entry(entity)
-                        .Navigation(includeProperty)
-                        .LoadAsync(cancellationToken);
-                }
+                await LoadRelatedEntitiesAsync(entity, cancellationToken, includeProperties);
             }
             return entity;
+        }
+
+        public virtual async Task LoadRelatedEntitiesAsync(
+            TEntity entity,
+            CancellationToken cancellationToken = default,
+            params string[] includeProperties)
+        {
+            foreach (var includeProperty in includeProperties)
+            {
+                await context.Entry(entity)
+                    .Navigation(includeProperty)
+                    .LoadAsync(cancellationToken);
+            }
         }
 
         public virtual void Update(TEntity entityToUpdate)

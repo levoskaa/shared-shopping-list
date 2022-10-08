@@ -20,5 +20,9 @@
         {
             shoppingListEntries.Add(shoppingListEntry);
         }
+        public void RemoveShoppingListEntry(ShoppingListEntry shoppingListEntry)
+        {
+            shoppingListEntries.Remove(shoppingListEntry);
+        }
     }
 }

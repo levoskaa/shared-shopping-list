@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using SharedShoppingList.API.Application.Commands;
 using SharedShoppingList.API.Application.Dtos;
 using SharedShoppingList.API.Application.ViewModels;
-using SharedShoppingList.API.Services;
 using System.Net;
 
 namespace SharedShoppingList.API.Controllers
@@ -15,16 +14,13 @@ namespace SharedShoppingList.API.Controllers
     {
         private readonly IMediator mediator;
         private readonly IMapper mapper;
-        private readonly IIdentityHelper identityHelper;
 
         public GroupsController(
             IMediator mediator,
-            IMapper mapper,
-            IIdentityHelper identityHelper)
+            IMapper mapper)
         {
             this.mediator = mediator;
             this.mapper = mapper;
-            this.identityHelper = identityHelper;
         }
 
         [HttpPost("{groupId}/shopping-list-entries")]
@@ -78,6 +74,24 @@ namespace SharedShoppingList.API.Controllers
             updateShoppingListEntryCommand.GroupId = groupId;
             var updatedShoppingListEntry = await mediator.Send(updateShoppingListEntryCommand);
             return mapper.Map<ShoppingListEntryViewModel>(updatedShoppingListEntry);
+        }
+
+        [HttpDelete("{groupId}/shooping-list-entries/{shoppingListEntryId}")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task DeleteShoppingListEntry(
+            [FromRoute] int groupId,
+            [FromRoute] int shoppingListEntryId)
+        {
+            var deleteShoppingListEntryCommand = new DeleteShoppingListEntryCommand
+            {
+                ShoppingListEntryId = shoppingListEntryId,
+                GroupId = groupId,
+            };
+            await mediator.Send(deleteShoppingListEntryCommand);
+            HttpContext.Response.StatusCode = (int)HttpStatusCode.NoContent;
         }
     }
 }
