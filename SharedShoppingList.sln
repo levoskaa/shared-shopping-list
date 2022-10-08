@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedShoppingList.API", "SharedShoppingList.API\SharedShoppingList.API.csproj", "{A084EFEB-C6C2-445F-BF1D-FB412F8443B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedShoppingList.API", "SharedShoppingList.API\SharedShoppingList.API.csproj", "{A084EFEB-C6C2-445F-BF1D-FB412F8443B1}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F9DCEB16-4A04-4DB9-8308-6E3FE6B08EDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A084EFEB-C6C2-445F-BF1D-FB412F8443B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A084EFEB-C6C2-445F-BF1D-FB412F8443B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A084EFEB-C6C2-445F-BF1D-FB412F8443B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9DCEB16-4A04-4DB9-8308-6E3FE6B08EDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9DCEB16-4A04-4DB9-8308-6E3FE6B08EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9DCEB16-4A04-4DB9-8308-6E3FE6B08EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9DCEB16-4A04-4DB9-8308-6E3FE6B08EDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

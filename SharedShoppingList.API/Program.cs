@@ -23,7 +23,34 @@ var configuration = builder.Configuration;
 
 // Add secrets to configuration object
 builder.Host.ConfigureAppConfiguration((context, config) =>
-    config.AddJsonFile("secrets.json", false, true));
+{
+    config.Sources.Clear();
+    var env = context.HostingEnvironment;
+
+    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+    if (env.IsDevelopment())
+    {
+        if (!string.IsNullOrEmpty(env.ApplicationName))
+        {
+            var appAssembly = Assembly.Load(new AssemblyName(env.ApplicationName));
+            if (appAssembly != null)
+            {
+                config.AddUserSecrets(appAssembly, optional: true);
+            }
+        }
+    }
+
+    config.AddJsonFile("secrets.json", optional: false, reloadOnChange: true);
+
+    config.AddEnvironmentVariables();
+
+    if (args != null)
+    {
+        config.AddCommandLine(args);
+    }
+});
 
 #region Add services to the container.
 // Autofac configuration
