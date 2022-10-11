@@ -28,6 +28,17 @@ namespace SharedShoppingList.API.Controllers
             this.mapper = maper;
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(TokenViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.BadRequest)]
+        public async Task<TokenViewModel> CreateUser([FromBody] RegisterDto dto)
+        {
+            var createUserCommand = mapper.Map<CreateUserCommand>(dto);
+            var token = await mediator.Send(createUserCommand);
+            return mapper.Map<TokenViewModel>(token);
+        }
+
         [HttpPost("{username}/groups")]
         [Authorize(Policy = "MatchingUsername")]
         [ProducesResponseType(typeof(UserGroupViewModel), (int)HttpStatusCode.Created)]
