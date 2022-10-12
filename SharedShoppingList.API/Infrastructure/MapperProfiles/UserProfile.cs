@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SharedShoppingList.API.Application.Commands;
+using SharedShoppingList.API.Application.Commands.UserCommands;
 using SharedShoppingList.API.Application.Dtos;
 
 namespace SharedShoppingList.API.Infrastructure.MapperProfiles

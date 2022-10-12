@@ -1,30 +1,35 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using SharedShoppingList.API.Application.Entities;
+using SharedShoppingList.API.Data;
 using SharedShoppingList.API.Data.Repositories;
 using SharedShoppingList.API.Infrastructure.Authorization;
 using SharedShoppingList.API.Infrastructure.Exceptions;
 using SharedShoppingList.API.Services;
 
-namespace SharedShoppingList.API.Application.Commands
+namespace SharedShoppingList.API.Application.Commands.ShoppingListEntryCommands
 {
-    public class GetShoppingListEntryCommandHandler : IRequestHandler<GetShoppingListEntryCommand, ShoppingListEntry>
+    public class UpdateShoppingListEntryCommandHandler
+        : IRequestHandler<UpdateShoppingListEntryCommand, ShoppingListEntry>
     {
         private readonly IRepository<UserGroup> userGroupRepository;
-        private readonly IAuthorizationService authorizationService;
         private readonly IIdentityHelper identityHelper;
+        private readonly IAuthorizationService authorizationService;
+        private readonly IUnitOfWork unitOfWork;
 
-        public GetShoppingListEntryCommandHandler(
+        public UpdateShoppingListEntryCommandHandler(
             IRepository<UserGroup> userGroupRepository,
+            IIdentityHelper identityHelper,
             IAuthorizationService authorizationService,
-            IIdentityHelper identityHelper)
+            IUnitOfWork unitOfWork)
         {
             this.userGroupRepository = userGroupRepository;
-            this.authorizationService = authorizationService;
             this.identityHelper = identityHelper;
+            this.authorizationService = authorizationService;
+            this.unitOfWork = unitOfWork;
         }
 
-        public async Task<ShoppingListEntry> Handle(GetShoppingListEntryCommand command, CancellationToken cancellationToken)
+        public async Task<ShoppingListEntry> Handle(UpdateShoppingListEntryCommand command, CancellationToken cancellationToken)
         {
             var userGroup = await userGroupRepository.GetByIdAsync(
                 command.GroupId,
@@ -44,13 +49,17 @@ namespace SharedShoppingList.API.Application.Commands
                 throw new ForbiddenException();
             }
 
-            var shoppingListEntry = userGroup.ShoppingListEntries
+            var shoppingListEntryToUpdate = userGroup.ShoppingListEntries
                 .SingleOrDefault(entry => entry.Id == command.ShoppingListEntryId);
-            if (shoppingListEntry == null)
+            if (shoppingListEntryToUpdate == null)
             {
                 throw new EntityNotFoundException("ShoppingListEntry not found");
             }
-            return shoppingListEntry;
+
+            shoppingListEntryToUpdate.Name = command.Name;
+            shoppingListEntryToUpdate.Quantity = command.Quantity;
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+            return shoppingListEntryToUpdate;
         }
     }
 }

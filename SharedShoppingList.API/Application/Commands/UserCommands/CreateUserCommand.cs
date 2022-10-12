@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SharedShoppingList.API.Application.Common;
 
-namespace SharedShoppingList.API.Application.Commands
+namespace SharedShoppingList.API.Application.Commands.UserCommands
 {
     public class CreateUserCommand : IRequest<AuthenticationResult>
     {

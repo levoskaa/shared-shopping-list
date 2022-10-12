@@ -8,7 +8,7 @@ using SharedShoppingList.API.Infrastructure.Exceptions;
 using SharedShoppingList.API.Services;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace SharedShoppingList.API.Application.Commands
+namespace SharedShoppingList.API.Application.Commands.UserCommands
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, AuthenticationResult>
     {

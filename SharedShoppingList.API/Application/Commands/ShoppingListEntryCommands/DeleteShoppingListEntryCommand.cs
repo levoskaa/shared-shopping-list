@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace SharedShoppingList.API.Application.Commands
+namespace SharedShoppingList.API.Application.Commands.ShoppingListEntryCommands
 {
     public class DeleteShoppingListEntryCommand : IRequest
     {

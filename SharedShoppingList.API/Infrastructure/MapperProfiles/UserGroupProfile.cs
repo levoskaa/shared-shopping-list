@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SharedShoppingList.API.Application.Commands;
+using SharedShoppingList.API.Application.Commands.UserGroupCommands;
 using SharedShoppingList.API.Application.Dtos;
 using SharedShoppingList.API.Application.Entities;
 using SharedShoppingList.API.Application.ViewModels;

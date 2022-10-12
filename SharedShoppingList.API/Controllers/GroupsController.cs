@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SharedShoppingList.API.Application.Commands;
+using SharedShoppingList.API.Application.Commands.ShoppingListEntryCommands;
 using SharedShoppingList.API.Application.Dtos;
 using SharedShoppingList.API.Application.ViewModels;
 using System.Net;

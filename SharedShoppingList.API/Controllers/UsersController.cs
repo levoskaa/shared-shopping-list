@@ -3,6 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedShoppingList.API.Application.Commands;
+using SharedShoppingList.API.Application.Commands.UserCommands;
+using SharedShoppingList.API.Application.Commands.UserGroupCommands;
 using SharedShoppingList.API.Application.Dtos;
 using SharedShoppingList.API.Application.ViewModels;
 using SharedShoppingList.API.Services;

@@ -4,7 +4,7 @@ using SharedShoppingList.API.Application.Entities;
 using SharedShoppingList.API.Data.Repositories;
 using SharedShoppingList.API.Infrastructure.Exceptions;
 
-namespace SharedShoppingList.API.Application.Commands
+namespace SharedShoppingList.API.Application.Commands.UserGroupCommands
 {
     public class GetUserGroupsCommandHandler : IRequestHandler<GetUserGroupsCommand, PaginatedList<UserGroup>>
     {
