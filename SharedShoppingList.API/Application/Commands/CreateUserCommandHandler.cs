@@ -40,16 +40,19 @@ namespace SharedShoppingList.API.Application.Commands
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = command.Username
             };
+            using var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
             var userCreationResult = await userManager.CreateAsync(user, command.Password);
             if (!userCreationResult.Succeeded)
             {
                 throw new Exception(); // TODO: use custom exception for 500
             }
+            await userManager.AddToRoleAsync(user, UserRole.User.ToString());
 
             var accessToken = await tokenService.GenerateAccessTokenAsync(user);
             var refreshToken = tokenService.GenerateRefreshToken();
             user.AddRefreshToken(refreshToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
+            transaction.Commit();
 
             return new AuthenticationResult
             {
