@@ -74,6 +74,23 @@ namespace SharedShoppingList.API.Controllers
             return mapper.Map<PaginatedListViewModel<UserGroupViewModel>>(userGroups);
         }
 
+        [HttpGet("{username}/groups/{groupId}")]
+        [Authorize(Policy = "MatchingUsername")]
+        [ProducesResponseType(typeof(UserGroupViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<UserGroupViewModel> GetUserGroup([FromRoute] int groupId)
+        {
+            var getUserGroupCommand = new GetUserGroupCommand
+            {
+                UserId = identityHelper.GetAuthenticatedUserId(),
+                GroupId = groupId,
+            };
+            var userGroup = await mediator.Send(getUserGroupCommand);
+            return mapper.Map<UserGroupViewModel>(userGroup);
+        }
+
         [HttpDelete("{username}/groups/{userGroupId}")]
         [Authorize(Policy = "MatchingUsername")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
