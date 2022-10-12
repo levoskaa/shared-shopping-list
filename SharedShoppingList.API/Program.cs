@@ -1,22 +1,22 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using SharedShoppingList.API.Application.Entities;
 using SharedShoppingList.API.Data;
 using SharedShoppingList.API.Infrastructure;
-using SharedShoppingList.API.Infrastructure.ErrorHandling;
-using System.Text;
-using System.Reflection;
-using Microsoft.OpenApi.Models;
-using System.IdentityModel.Tokens.Jwt;
 using SharedShoppingList.API.Infrastructure.Authorization;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
+using SharedShoppingList.API.Infrastructure.ErrorHandling;
+using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -74,7 +74,6 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
-
 
 // DbContext
 builder.Services.AddDbContext<SharedShoppingListContext>(options =>
@@ -137,6 +136,21 @@ using (var scope = app.Services.CreateAsyncScope())
 using (var dbContext = scope.ServiceProvider.GetService<SharedShoppingListContext>())
 {
     await dbContext.Database.MigrateAsync();
+}
+#endregion
+
+#region Seed initial data
+using (var scope = app.Services.CreateAsyncScope())
+using (var dbContext = scope.ServiceProvider.GetService<SharedShoppingListContext>())
+{
+    dbContext.Database.EnsureCreated();
+
+    var roleManager = scope.ServiceProvider.GetService<RoleManager<Role>>();
+    var userManager = scope.ServiceProvider.GetService<UserManager<User>>();
+    await DbSeeder.SeedRolesAsync(roleManager);
+    await DbSeeder.SeedUsers(userManager);
+
+    await dbContext.SaveChangesAsync();
 }
 #endregion
 
