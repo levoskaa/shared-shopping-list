@@ -39,7 +39,7 @@ namespace SharedShoppingList.API.Controllers
             return mapper.Map<ShoppingListEntryViewModel>(createdShoppingListEntry);
         }
 
-        [HttpGet("{groupId}/shooping-list-entries")]
+        [HttpGet("{groupId}/shopping-list-entries")]
         [ProducesResponseType(typeof(PaginatedListViewModel<ShoppingListEntryViewModel>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
@@ -59,7 +59,25 @@ namespace SharedShoppingList.API.Controllers
             return mapper.Map<PaginatedListViewModel<ShoppingListEntryViewModel>>(shoppingListEntries);
         }
 
-        [HttpPut("{groupId}/shooping-list-entries/{shoppingListEntryId}")]
+        [HttpGet("{groupId}/shopping-list-entries/{shoppingListEntryId}")]
+        [ProducesResponseType(typeof(ShoppingListEntryViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<ShoppingListEntryViewModel> GetShoppingListEntry(
+            [FromRoute] int groupId,
+            [FromRoute] int shoppingListEntryId)
+        {
+            var getShoppingListEntryCommand = new GetShoppingListEntryCommand
+            {
+                GroupId = groupId,
+                ShoppingListEntryId = shoppingListEntryId,
+            };
+            var shoppingListEntry = await mediator.Send(getShoppingListEntryCommand);
+            return mapper.Map<ShoppingListEntryViewModel>(shoppingListEntry);
+        }
+
+        [HttpPut("{groupId}/shopping-list-entries/{shoppingListEntryId}")]
         [ProducesResponseType(typeof(ShoppingListEntryViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
@@ -76,7 +94,7 @@ namespace SharedShoppingList.API.Controllers
             return mapper.Map<ShoppingListEntryViewModel>(updatedShoppingListEntry);
         }
 
-        [HttpDelete("{groupId}/shooping-list-entries/{shoppingListEntryId}")]
+        [HttpDelete("{groupId}/shopping-list-entries/{shoppingListEntryId}")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
