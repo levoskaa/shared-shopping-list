@@ -132,6 +132,14 @@ builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 
+#region Apply migrations on startup
+using (var scope = app.Services.CreateAsyncScope())
+using (var dbContext = scope.ServiceProvider.GetService<SharedShoppingListContext>())
+{
+    await dbContext.Database.MigrateAsync();
+}
+#endregion
+
 #region Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
