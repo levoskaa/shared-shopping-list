@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SharedShoppingList.API.Application.Commands;
 using SharedShoppingList.API.Application.Commands.UserCommands;
 using SharedShoppingList.API.Application.Commands.UserGroupCommands;
 using SharedShoppingList.API.Application.Dtos;
@@ -90,6 +89,23 @@ namespace SharedShoppingList.API.Controllers
                 GroupId = groupId,
             };
             var userGroup = await mediator.Send(getUserGroupCommand);
+            return mapper.Map<UserGroupViewModel>(userGroup);
+        }
+
+        [HttpPut("{username}/groups/{groupId}")]
+        [Authorize(Policy = "MatchingUsername")]
+        [ProducesResponseType(typeof(UserGroupViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<UserGroupViewModel> UpdateUserGroup(
+            [FromRoute] int groupId,
+            [FromBody] UpdateUserGroupDto dto)
+        {
+            var updateUserGroupCommand = mapper.Map<UpdateUserGroupCommand>(dto);
+            updateUserGroupCommand.UserId = identityHelper.GetAuthenticatedUserId();
+            updateUserGroupCommand.GroupId = groupId;
+            var userGroup = await mediator.Send(updateUserGroupCommand);
             return mapper.Map<UserGroupViewModel>(userGroup);
         }
 
