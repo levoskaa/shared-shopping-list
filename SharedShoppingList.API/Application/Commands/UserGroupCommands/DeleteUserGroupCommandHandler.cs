@@ -7,7 +7,7 @@ using SharedShoppingList.API.Infrastructure.Authorization;
 using SharedShoppingList.API.Infrastructure.Exceptions;
 using SharedShoppingList.API.Services;
 
-namespace SharedShoppingList.API.Application.Commands
+namespace SharedShoppingList.API.Application.Commands.UserGroupCommands
 {
     public class DeleteUserGroupCommandHandler : IRequestHandler<DeleteUserGroupCommand>
     {

@@ -39,17 +39,6 @@ namespace SharedShoppingList.API.Controllers
             return mapper.Map<TokenViewModel>(token);
         }
 
-        [HttpPost("register")]
-        [AllowAnonymous]
-        [ProducesResponseType(typeof(TokenViewModel), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.BadRequest)]
-        public async Task<TokenViewModel> Register([FromBody] RegisterDto dto)
-        {
-            var createUserCommand = mapper.Map<CreateUserCommand>(dto);
-            var token = await mediator.Send(createUserCommand);
-            return mapper.Map<TokenViewModel>(token);
-        }
-
         [HttpPost("refresh")]
         [ProducesResponseType(typeof(TokenViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.Unauthorized)]
