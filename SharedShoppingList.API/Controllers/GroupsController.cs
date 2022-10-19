@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SharedShoppingList.API.Application.Commands.InviteCodeCommands;
 using SharedShoppingList.API.Application.Commands.ShoppingListEntryCommands;
 using SharedShoppingList.API.Application.Dtos;
 using SharedShoppingList.API.Application.ViewModels;
@@ -110,6 +111,24 @@ namespace SharedShoppingList.API.Controllers
             };
             await mediator.Send(deleteShoppingListEntryCommand);
             HttpContext.Response.StatusCode = (int)HttpStatusCode.NoContent;
+        }
+
+        [HttpPost("{groupId}/invite-codes")]
+        [ProducesResponseType(typeof(InviteCodeViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<InviteCodeViewModel> GenerateInviteCode([FromRoute] int groupId)
+        {
+            var generateInviteCodeCommand = new GenerateInviteCodeCommand
+            {
+                GroupId = groupId,
+            };
+            var inviteCode = await mediator.Send(generateInviteCodeCommand);
+            return new InviteCodeViewModel
+            {
+                Value = inviteCode,
+            };
         }
     }
 }
