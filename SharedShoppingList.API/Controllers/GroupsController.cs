@@ -148,5 +148,18 @@ namespace SharedShoppingList.API.Controllers
                 Value = inviteCode,
             };
         }
+
+        [HttpPost("join/{inviteCode}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        public async Task JoinGroup([FromRoute] string inviteCode)
+        {
+            var joinUserGroupCommand = new JoinUserGroupCommand
+            {
+                InviteCode = inviteCode,
+            };
+            await mediator.Send(joinUserGroupCommand);
+        }
     }
 }
