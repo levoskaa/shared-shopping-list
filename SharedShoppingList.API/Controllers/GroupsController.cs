@@ -130,5 +130,23 @@ namespace SharedShoppingList.API.Controllers
                 Value = inviteCode,
             };
         }
+
+        [HttpGet("{groupId}/invite-codes")]
+        [ProducesResponseType(typeof(InviteCodeViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<InviteCodeViewModel> GetInviteCodes([FromRoute] int groupId)
+        {
+            var getInviteCodeCommand = new GetInviteCodeCommand
+            {
+                GroupId = groupId,
+            };
+            var inviteCode = await mediator.Send(getInviteCodeCommand);
+            return new InviteCodeViewModel
+            {
+                Value = inviteCode,
+            };
+        }
     }
 }
