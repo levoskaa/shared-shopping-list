@@ -40,6 +40,24 @@ namespace SharedShoppingList.API.Controllers
             return mapper.Map<TokenViewModel>(token);
         }
 
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        [ProducesResponseType(typeof(PaginatedListViewModel<UserViewModel>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        public async Task<PaginatedListViewModel<UserViewModel>> GetUsers(
+            [FromQuery] int pageSize = 10,
+            [FromQuery] int pageIndex = 1)
+        {
+            var getUsersCommand = new GetUsersCommand
+            {
+                PageSize = pageSize,
+                PageIndex = pageIndex,
+            };
+            var users = await mediator.Send(getUsersCommand);
+            return mapper.Map<PaginatedListViewModel<UserViewModel>>(users);
+        }
+
         [HttpPost("{username}/groups")]
         [Authorize(Policy = "MatchingUsername")]
         [ProducesResponseType(typeof(UserGroupViewModel), (int)HttpStatusCode.Created)]

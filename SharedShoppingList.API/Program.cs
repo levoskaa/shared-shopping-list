@@ -39,10 +39,9 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 // Controllers
 builder.Services.AddControllers(options =>
 {
-    // Require authentication and "user" role by default on all endpoints
+    // Require authentication by default on all endpoints
     var policy = new AuthorizationPolicyBuilder()
                      .RequireAuthenticatedUser()
-                     .RequireRole(UserRole.User.ToString().ToLower())
                      .Build();
     options.Filters.Add(new AuthorizeFilter(policy));
 });
