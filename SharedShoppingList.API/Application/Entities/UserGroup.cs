@@ -3,6 +3,7 @@
     public class UserGroup : Entity
     {
         public string Name { get; set; }
+        public string InviteCode { get; set; }
 
         private readonly List<UserUserGroup> userUserGroups = new();
         public virtual IReadOnlyCollection<UserUserGroup> UserUserGroups => userUserGroups;
@@ -20,6 +21,7 @@
         {
             shoppingListEntries.Add(shoppingListEntry);
         }
+
         public void RemoveShoppingListEntry(ShoppingListEntry shoppingListEntry)
         {
             shoppingListEntries.Remove(shoppingListEntry);

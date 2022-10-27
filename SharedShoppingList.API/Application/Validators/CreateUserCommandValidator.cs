@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using SharedShoppingList.API.Application.Commands;
+using SharedShoppingList.API.Application.Commands.UserCommands;
 using SharedShoppingList.API.Infrastructure.ErrorHandling;
 
 namespace SharedShoppingList.API.Application.Validators

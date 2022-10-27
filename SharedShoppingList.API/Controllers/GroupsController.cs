@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SharedShoppingList.API.Application.Commands;
+using SharedShoppingList.API.Application.Commands.InviteCodeCommands;
+using SharedShoppingList.API.Application.Commands.ShoppingListEntryCommands;
 using SharedShoppingList.API.Application.Dtos;
 using SharedShoppingList.API.Application.ViewModels;
 using System.Net;
@@ -39,7 +40,7 @@ namespace SharedShoppingList.API.Controllers
             return mapper.Map<ShoppingListEntryViewModel>(createdShoppingListEntry);
         }
 
-        [HttpGet("{groupId}/shooping-list-entries")]
+        [HttpGet("{groupId}/shopping-list-entries")]
         [ProducesResponseType(typeof(PaginatedListViewModel<ShoppingListEntryViewModel>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
@@ -59,7 +60,25 @@ namespace SharedShoppingList.API.Controllers
             return mapper.Map<PaginatedListViewModel<ShoppingListEntryViewModel>>(shoppingListEntries);
         }
 
-        [HttpPut("{groupId}/shooping-list-entries/{shoppingListEntryId}")]
+        [HttpGet("{groupId}/shopping-list-entries/{shoppingListEntryId}")]
+        [ProducesResponseType(typeof(ShoppingListEntryViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<ShoppingListEntryViewModel> GetShoppingListEntry(
+            [FromRoute] int groupId,
+            [FromRoute] int shoppingListEntryId)
+        {
+            var getShoppingListEntryCommand = new GetShoppingListEntryCommand
+            {
+                GroupId = groupId,
+                ShoppingListEntryId = shoppingListEntryId,
+            };
+            var shoppingListEntry = await mediator.Send(getShoppingListEntryCommand);
+            return mapper.Map<ShoppingListEntryViewModel>(shoppingListEntry);
+        }
+
+        [HttpPut("{groupId}/shopping-list-entries/{shoppingListEntryId}")]
         [ProducesResponseType(typeof(ShoppingListEntryViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
@@ -76,7 +95,7 @@ namespace SharedShoppingList.API.Controllers
             return mapper.Map<ShoppingListEntryViewModel>(updatedShoppingListEntry);
         }
 
-        [HttpDelete("{groupId}/shooping-list-entries/{shoppingListEntryId}")]
+        [HttpDelete("{groupId}/shopping-list-entries/{shoppingListEntryId}")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
@@ -92,6 +111,55 @@ namespace SharedShoppingList.API.Controllers
             };
             await mediator.Send(deleteShoppingListEntryCommand);
             HttpContext.Response.StatusCode = (int)HttpStatusCode.NoContent;
+        }
+
+        [HttpPost("{groupId}/invite-codes")]
+        [ProducesResponseType(typeof(InviteCodeViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<InviteCodeViewModel> GenerateInviteCode([FromRoute] int groupId)
+        {
+            var generateInviteCodeCommand = new GenerateInviteCodeCommand
+            {
+                GroupId = groupId,
+            };
+            var inviteCode = await mediator.Send(generateInviteCodeCommand);
+            return new InviteCodeViewModel
+            {
+                Value = inviteCode,
+            };
+        }
+
+        [HttpGet("{groupId}/invite-codes")]
+        [ProducesResponseType(typeof(InviteCodeViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.Forbidden)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<InviteCodeViewModel> GetInviteCodes([FromRoute] int groupId)
+        {
+            var getInviteCodeCommand = new GetInviteCodeCommand
+            {
+                GroupId = groupId,
+            };
+            var inviteCode = await mediator.Send(getInviteCodeCommand);
+            return new InviteCodeViewModel
+            {
+                Value = inviteCode,
+            };
+        }
+
+        [HttpPost("join/{inviteCode}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        public async Task JoinGroup([FromRoute] string inviteCode)
+        {
+            var joinUserGroupCommand = new JoinUserGroupCommand
+            {
+                InviteCode = inviteCode,
+            };
+            await mediator.Send(joinUserGroupCommand);
         }
     }
 }

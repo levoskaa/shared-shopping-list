@@ -6,35 +6,34 @@ using SharedShoppingList.API.Data.Repositories;
 using SharedShoppingList.API.Infrastructure.Authorization;
 using SharedShoppingList.API.Infrastructure.Exceptions;
 using SharedShoppingList.API.Services;
+using System.Text;
 
-namespace SharedShoppingList.API.Application.Commands
+namespace SharedShoppingList.API.Application.Commands.InviteCodeCommands
 {
-    public class UpdateShoppingListEntryCommandHandler
-        : IRequestHandler<UpdateShoppingListEntryCommand, ShoppingListEntry>
+    public class GenerateInviteCodeCommandHandler : IRequestHandler<GenerateInviteCodeCommand, string>
     {
         private readonly IRepository<UserGroup> userGroupRepository;
-        private readonly IIdentityHelper identityHelper;
         private readonly IAuthorizationService authorizationService;
+        private readonly IIdentityHelper identityHelper;
         private readonly IUnitOfWork unitOfWork;
 
-        public UpdateShoppingListEntryCommandHandler(
+        public GenerateInviteCodeCommandHandler(
             IRepository<UserGroup> userGroupRepository,
-            IIdentityHelper identityHelper,
             IAuthorizationService authorizationService,
+            IIdentityHelper identityHelper,
             IUnitOfWork unitOfWork)
         {
             this.userGroupRepository = userGroupRepository;
-            this.identityHelper = identityHelper;
             this.authorizationService = authorizationService;
+            this.identityHelper = identityHelper;
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<ShoppingListEntry> Handle(UpdateShoppingListEntryCommand command, CancellationToken cancellationToken)
+        public async Task<string> Handle(GenerateInviteCodeCommand command, CancellationToken cancellationToken)
         {
             var userGroup = await userGroupRepository.GetByIdAsync(
                 command.GroupId,
-                cancellationToken,
-                nameof(UserGroup.ShoppingListEntries));
+                cancellationToken);
             if (userGroup == null)
             {
                 throw new EntityNotFoundException("UserGroup not found");
@@ -43,23 +42,29 @@ namespace SharedShoppingList.API.Application.Commands
             var authorizationResult = await authorizationService.AuthorizeAsync(
                 identityHelper.ClaimsPrincipal,
                 userGroup,
-                new UserGroupMemberRequirement());
+                new UserGroupOwnerRequirement());
             if (!authorizationResult.Succeeded)
             {
                 throw new ForbiddenException();
             }
 
-            var shoppingListEntryToUpdate = userGroup.ShoppingListEntries
-                .SingleOrDefault(entry => entry.Id == command.ShoppingListEntryId);
-            if (shoppingListEntryToUpdate == null)
+            userGroup.InviteCode = GenerateInviteCode();
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+            return userGroup.InviteCode;
+        }
+
+        private string GenerateInviteCode()
+        {
+            const string validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var sb = new StringBuilder();
+            var random = new Random();
+
+            for (int i = 0; i < 6; i++)
             {
-                throw new EntityNotFoundException("ShoppingListEntry not found");
+                sb.Append(validChars[random.Next(validChars.Length)]);
             }
 
-            shoppingListEntryToUpdate.Name = command.Name;
-            shoppingListEntryToUpdate.Quantity = command.Quantity;
-            await unitOfWork.SaveChangesAsync(cancellationToken);
-            return shoppingListEntryToUpdate;
+            return sb.ToString();
         }
     }
 }
