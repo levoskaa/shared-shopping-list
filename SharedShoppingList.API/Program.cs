@@ -97,14 +97,14 @@ builder.Services.AddSwaggerGen(options =>
                     Id="Bearer"
                 }
             },
-            new string[]{}
+            Array.Empty<string>()
         }
     });
 });
 
 // DbContext
 builder.Services.AddDbContext<SharedShoppingListContext>(options =>
-    options.UseSqlServer(configuration.GetConnectionString("Default")));
+    options.UseSqlite(configuration.GetConnectionString("Default")));
 
 // Identity
 builder.Services.AddIdentity<User, Role>()
@@ -162,7 +162,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateAsyncScope())
 using (var dbContext = scope.ServiceProvider.GetService<SharedShoppingListContext>())
 {
-    await dbContext.Database.MigrateAsync();
+        await dbContext.Database.MigrateAsync();
 }
 #endregion
 
