@@ -3,6 +3,12 @@
 
 secrets.json
 
+# Let's Encrypt configuration and certificate
+compose/certbot/
+
+# SQLite database
+data/
+
 ### Angular ###
 ## Angular ##
 # compiled output
