@@ -25,11 +25,6 @@ namespace SharedShoppingList.API.Infrastructure
                 .As(typeof(IPipelineBehavior<,>))
                 .InstancePerDependency();
 
-            // Dapper
-            builder.RegisterType<DapperContext>()
-                .AsSelf()
-                .SingleInstance();
-
             // TokenService
             builder.RegisterType<TokenService>()
                 .AsImplementedInterfaces()
