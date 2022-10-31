@@ -23,7 +23,34 @@ var configuration = builder.Configuration;
 
 // Add secrets to configuration object
 builder.Host.ConfigureAppConfiguration((context, config) =>
-    config.AddJsonFile("secrets.json", false, true));
+{
+    config.Sources.Clear();
+    var env = context.HostingEnvironment;
+
+    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+          .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+    if (env.IsDevelopment())
+    {
+        if (!string.IsNullOrEmpty(env.ApplicationName))
+        {
+            var appAssembly = Assembly.Load(new AssemblyName(env.ApplicationName));
+            if (appAssembly != null)
+            {
+                config.AddUserSecrets(appAssembly, optional: true);
+            }
+        }
+    }
+
+    config.AddJsonFile("secrets.json", optional: false, reloadOnChange: true);
+
+    config.AddEnvironmentVariables();
+
+    if (args != null)
+    {
+        config.AddCommandLine(args);
+    }
+});
 
 #region Add services to the container.
 // Autofac configuration
@@ -70,14 +97,14 @@ builder.Services.AddSwaggerGen(options =>
                     Id="Bearer"
                 }
             },
-            new string[]{}
+            Array.Empty<string>()
         }
     });
 });
 
 // DbContext
 builder.Services.AddDbContext<SharedShoppingListContext>(options =>
-    options.UseSqlServer(configuration.GetConnectionString("Default")));
+    options.UseSqlite(configuration.GetConnectionString("Default")));
 
 // Identity
 builder.Services.AddIdentity<User, Role>()
@@ -127,6 +154,9 @@ JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 // MediatR
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+
+// HealthChecks
+builder.Services.AddHealthChecks();
 #endregion
 
 var app = builder.Build();
@@ -135,7 +165,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateAsyncScope())
 using (var dbContext = scope.ServiceProvider.GetService<SharedShoppingListContext>())
 {
-    await dbContext.Database.MigrateAsync();
+        await dbContext.Database.MigrateAsync();
 }
 #endregion
 
@@ -161,9 +191,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<ExceptionHandlerMiddleware>();
+app.MapHealthChecks("/health");
 
-app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();

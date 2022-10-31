@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  sharedshoppinglist.api:
+    container_name: "shared-shopping-list_web-api"
+    image: ${DOCKER_REGISTRY-}sharedshoppinglistapi
+    environment:
+      - ConnectionStrings__Default=Server=sql-server;Database=SharedShoppingList;User Id=sa;Password=abcd!1234;
+    build:
+      context: .
+      dockerfile: SharedShoppingList.API/Dockerfile
+
+  sql-server:
+    container_name: "shared-shopping-list_sql-server"
+    image: mcr.microsoft.com/mssql/server:2019-CU13-ubuntu-20.04
+    environment:
+      - SA_PASSWORD=abcd!1234
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433"
+    volumes:
+      - "shared-shopping-list-data:/var/opt/mssql"
+
+volumes:
+  shared-shopping-list-data:
