@@ -154,6 +154,9 @@ JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 // MediatR
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+
+// HealthChecks
+builder.Services.AddHealthChecks();
 #endregion
 
 var app = builder.Build();
@@ -187,6 +190,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.MapHealthChecks("/health");
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 
