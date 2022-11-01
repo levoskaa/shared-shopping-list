@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "SharedShoppingList.Client": {
+    "shared-shopping-list-client": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -94,10 +94,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "SharedShoppingList.Client:build:production"
+              "browserTarget": "shared-shopping-list-client:build:production"
             },
             "development": {
-              "browserTarget": "SharedShoppingList.Client:build:development"
+              "browserTarget": "shared-shopping-list-client:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -105,7 +105,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "SharedShoppingList.Client:build"
+            "browserTarget": "shared-shopping-list-client:build"
           }
         },
         "test": {
