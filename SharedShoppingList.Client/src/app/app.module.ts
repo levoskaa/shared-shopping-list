@@ -6,7 +6,11 @@ import { environment } from '@environments/environment';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import {
+  NgxsStoragePluginModule,
+  StorageEngine,
+  STORAGE_ENGINE,
+} from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +21,11 @@ import { SharedModule } from './shared/shared.module';
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+export function createStorageEngine(): StorageEngine {
+  // TODO: add strategy design pattern when prepared to run with Ionic
+  return localStorage;
 }
 
 @NgModule({
@@ -47,7 +56,12 @@ export function createTranslateLoader(http: HttpClient): TranslateLoader {
     AppRoutingModule,
     SharedModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: STORAGE_ENGINE,
+      useFactory: createStorageEngine,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
