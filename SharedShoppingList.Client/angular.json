@@ -57,7 +57,7 @@
               "node_modules/primeflex/primeflex.css"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/assets/styles"]
+              "includePaths": ["src/app/styles"]
             },
             "scripts": []
           },
