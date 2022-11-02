@@ -10,8 +10,8 @@ export class AppComponent implements OnInit {
   title = 'shared-shopping-list-client';
 
   constructor(
-    private primengConfig: PrimeNGConfig,
-    private translate: TranslateService
+    private readonly primengConfig: PrimeNGConfig,
+    private readonly translate: TranslateService
   ) {}
 
   ngOnInit() {
