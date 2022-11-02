@@ -1,5 +1,6 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '@environments/environment';
@@ -17,6 +18,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { SharedModule } from './shared/shared.module';
+import { AuthState } from './shared/states/auth/auth.state';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient): TranslateLoader {
@@ -34,6 +36,7 @@ export function createStorageEngine(): StorageEngine {
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     TranslateModule.forRoot({
       defaultLanguage: 'en',
       loader: {
@@ -42,12 +45,11 @@ export function createStorageEngine(): StorageEngine {
         deps: [HttpClient],
       },
     }),
-    NgxsModule.forRoot([], {
+    NgxsModule.forRoot([AuthState], {
       developmentMode: !environment.production,
     }),
     NgxsStoragePluginModule.forRoot({
-      // TODO: add keys
-      key: [],
+      key: [AuthState],
     }),
     NgxsReduxDevtoolsPluginModule.forRoot({
       name: 'Shoppy',
