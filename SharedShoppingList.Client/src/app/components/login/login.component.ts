@@ -9,7 +9,6 @@ import { SignIn } from 'src/app/shared/states/auth/auth.actions';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['login.component.scss'],
 })
 export class LoginComponent {
   formControls: Record<keyof SignInDto, FormControl> = {
