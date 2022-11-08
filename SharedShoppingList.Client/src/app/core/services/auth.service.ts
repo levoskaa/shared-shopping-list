@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SignInDto, TokenViewModel } from 'src/app/shared/models/generated';
-import { AppHttpClient } from '../http/app-http-client';
+import { AppHttpClient } from '../http-clients/app-http-client';
 
 @Injectable({
   providedIn: 'root',

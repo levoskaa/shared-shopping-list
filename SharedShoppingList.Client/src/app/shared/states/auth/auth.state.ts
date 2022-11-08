@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { tap } from 'rxjs';
-import { AuthService } from 'src/app/core/auth/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { TokenViewModel } from '../../models/generated';
 import { SignIn } from './auth.actions';
 
