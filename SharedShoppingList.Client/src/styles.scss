@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "colors";
+@import "variables";
 
 html {
   box-sizing: border-box;
@@ -14,4 +15,6 @@ body {
   margin: 0;
   padding: 0;
   background-color: $surface-d;
+  color: $text-color;
+  font-family: $font-family;
 }
