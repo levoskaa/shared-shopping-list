@@ -14,6 +14,8 @@ export class TokenInterceptor implements HttpInterceptor {
   private accessToken?: string;
 
   constructor(private readonly store: Store) {
+    // There should only be one instance of this interceptor which gets destroyed
+    // when the page is unloaded, so there is no need to unsubscribe.
     this.store
       .select(AuthState.accessToken)
       .pipe(tap((accessToken) => (this.accessToken = accessToken)))
