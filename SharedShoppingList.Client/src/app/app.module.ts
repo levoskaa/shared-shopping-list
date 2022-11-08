@@ -17,10 +17,12 @@ import { NgxsModule } from '@ngxs/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
+import { httpInterceptorProviders } from './core/http-interceptors';
 import { SharedModule } from './shared/shared.module';
 import { AuthState } from './shared/states/auth/auth.state';
 
 // AoT requires an exported function for factories
+
 export function createTranslateLoader(http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -63,6 +65,7 @@ export function createStorageEngine(): StorageEngine {
       provide: STORAGE_ENGINE,
       useFactory: createStorageEngine,
     },
+    httpInterceptorProviders,
   ],
   bootstrap: [AppComponent],
 })
