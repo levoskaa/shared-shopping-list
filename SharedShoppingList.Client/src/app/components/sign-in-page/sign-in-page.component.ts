@@ -7,10 +7,9 @@ import { SignInDto } from 'src/app/shared/models/generated';
 import { SignIn } from 'src/app/shared/states/auth/auth.actions';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
+  templateUrl: './sign-in-page.component.html',
 })
-export class LoginComponent {
+export class SignInPageComponent {
   formControls: Record<keyof SignInDto, FormControl> = {
     username: new FormControl(undefined, Validators.required),
     password: new FormControl(undefined, Validators.required),

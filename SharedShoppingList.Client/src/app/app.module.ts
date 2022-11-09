@@ -16,7 +16,7 @@ import { NgxsModule } from '@ngxs/store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
+import { SignInPageComponent } from './components/sign-in-page/sign-in-page.component';
 import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
 import { httpInterceptorProviders } from './core/http-interceptors';
 import { SharedModule } from './shared/shared.module';
@@ -34,7 +34,7 @@ export function createStorageEngine(): StorageEngine {
 }
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SignUpPageComponent],
+  declarations: [AppComponent, SignInPageComponent, SignUpPageComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
