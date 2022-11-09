@@ -6,5 +6,10 @@
   "username": "username",
   "password": "password",
   "rememberMe": "Remember me",
-  "signIn": "Sign In"
+  "signIn": "sign in",
+  "signUp": "sign up",
+  "createAccount": "create account",
+  "alreadyHaveAnAccountQuestion": "Already have an account?",
+  "signInSuggestion": "Sign in now!",
+  "confirmPassword": "confirm password"
 }

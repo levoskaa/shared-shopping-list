@@ -4,7 +4,8 @@
             <app-logo class="mx-auto"></app-logo>
             <div class="text-900 text-3xl font-medium mt-3" translate>welcomeBack</div>
             <span class="text-600 font-medium line-height-3" translate>noAccountQuestion</span>
-            <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" translate>createAccountSuggestion</a>
+            <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" [routerLink]="['/', 'sign-up']"
+                translate>createAccountSuggestion</a>
         </div>
 
         <form [formGroup]="form">
@@ -23,8 +24,9 @@
                 </div>
             </div>
 
-            <button [disabled]="form.invalid || form.pristine" pButton pRipple label="{{'signIn' | translate}}"
-                icon="pi pi-user" class="w-full" (click)="signIn()"></button>
+            <button [disabled]="form.invalid || form.pristine" pButton pRipple
+                label="{{'signIn' | translate | titlecase}}" icon="pi pi-user" class="w-full"
+                (click)="signIn()"></button>
         </form>
     </div>
 </div>

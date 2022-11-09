@@ -3,7 +3,7 @@ import { Action, Selector, State, StateContext, StateToken } from '@ngxs/store';
 import { tap } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
 import { TokenViewModel } from '../../models/generated';
-import { SignIn } from './auth.actions';
+import { SignIn, SignUp } from './auth.actions';
 
 interface AuthStateModel {
   accessToken?: string;
@@ -45,8 +45,21 @@ export class AuthState {
   constructor(private readonly authService: AuthService) {}
 
   @Action(SignIn)
-  login(ctx: StateContext<AuthStateModel>, action: SignIn) {
+  signIn(ctx: StateContext<AuthStateModel>, action: SignIn) {
     return this.authService.signIn(action.payload).pipe(
+      tap((result: TokenViewModel) => {
+        ctx.patchState({
+          accessToken: result.accessToken,
+          refreshToken: result.refreshToken,
+          accessTokenExpiryTime: result.accessTokenExpiryTime,
+        });
+      })
+    );
+  }
+
+  @Action(SignUp)
+  signUp(ctx: StateContext<AuthStateModel>, action: SignUp) {
+    return this.authService.signUp(action.payload).pipe(
       tap((result: TokenViewModel) => {
         ctx.patchState({
           accessToken: result.accessToken,
