@@ -47,12 +47,12 @@ namespace SharedShoppingList.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
         public async Task<PaginatedListViewModel<UserViewModel>> GetUsers(
             [FromQuery] int pageSize = 10,
-            [FromQuery] int pageIndex = 1)
+            [FromQuery] int offset = 0)
         {
             var getUsersCommand = new GetUsersCommand
             {
                 PageSize = pageSize,
-                PageIndex = pageIndex,
+                Offset = offset,
             };
             var users = await mediator.Send(getUsersCommand);
             return mapper.Map<PaginatedListViewModel<UserViewModel>>(users);
@@ -81,12 +81,12 @@ namespace SharedShoppingList.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<PaginatedListViewModel<UserGroupViewModel>> GetUserGroups(
             [FromQuery] int pageSize = 10,
-            [FromQuery] int pageIndex = 1)
+            [FromQuery] int offset = 0)
         {
             var getUserGroupsCommand = new GetUserGroupsCommand
             {
                 PageSize = pageSize,
-                PageIndex = pageIndex,
+                Offset = offset,
                 UserId = identityHelper.GetAuthenticatedUserId(),
             };
             var userGroups = await mediator.Send(getUserGroupsCommand);

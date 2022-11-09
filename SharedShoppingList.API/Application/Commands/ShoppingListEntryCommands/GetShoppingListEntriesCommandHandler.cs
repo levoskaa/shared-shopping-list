@@ -49,8 +49,7 @@ namespace SharedShoppingList.API.Application.Commands.ShoppingListEntryCommands
             return new PaginatedList<ShoppingListEntry>(
                 userGroup.ShoppingListEntries,
                 userGroup.ShoppingListEntries.Count,
-                command.PageSize,
-                command.PageIndex);
+                command.PageSize);
         }
     }
 }
