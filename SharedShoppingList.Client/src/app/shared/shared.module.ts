@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -17,6 +18,7 @@ const uiModules = [
   ButtonModule,
   RippleModule,
   MenuModule,
+  NgScrollbarModule,
 ];
 
 const components = [LayoutComponent, HeaderComponent, LogoComponent];
