@@ -33,7 +33,7 @@ namespace SharedShoppingList.API.Controllers
         [AllowAnonymous]
         [ProducesResponseType(typeof(TokenViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.BadRequest)]
-        public async Task<TokenViewModel> CreateUser([FromBody] RegisterDto dto)
+        public async Task<TokenViewModel> CreateUser([FromBody] SignUpDto dto)
         {
             var createUserCommand = mapper.Map<CreateUserCommand>(dto);
             var token = await mediator.Send(createUserCommand);
