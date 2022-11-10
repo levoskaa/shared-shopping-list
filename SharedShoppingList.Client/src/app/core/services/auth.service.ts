@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
-  RegisterDto,
   SignInDto,
+  SignUpDto,
   TokenViewModel,
 } from 'src/app/shared/models/generated';
 import { AppHttpClient } from '../http-clients/app-http-client';
@@ -20,7 +20,7 @@ export class AuthService {
     return this.httpClient.post(`${this.authUrl}/sign-in`, dto);
   }
 
-  signUp(dto: RegisterDto): Observable<TokenViewModel> {
+  signUp(dto: SignUpDto): Observable<TokenViewModel> {
     return this.httpClient.post(this.usersUrl, dto);
   }
 }

@@ -8,109 +8,101 @@
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
 
-
-
 export interface CreateShoppingListEntryDto {
-    name: string | undefined;
-    quantity: string | undefined;
+  name: string | undefined;
+  quantity: string | undefined;
 }
 
 export interface CreateUserGroupDto {
-    name: string | undefined;
+  name: string | undefined;
 }
 
 export interface ErrorViewModel {
-    message: string | undefined;
-    errors: string[] | undefined;
-    stackTrace: string | undefined;
+  message: string | undefined;
+  errors: string[] | undefined;
+  stackTrace: string | undefined;
 }
 
 export interface InviteCodeViewModel {
-    value: string | undefined;
+  value: string | undefined;
 }
 
 export interface ProblemDetails {
-    type: string | undefined;
-    title: string | undefined;
-    status: number | undefined;
-    detail: string | undefined;
-    instance: string | undefined;
+  type: string | undefined;
+  title: string | undefined;
+  status: number | undefined;
+  detail: string | undefined;
+  instance: string | undefined;
 
-    [key: string]: any;
+  [key: string]: any;
 }
 
 export interface RefreshTokenDto {
-    accessToken: string | undefined;
-    refreshToken: string | undefined;
-}
-
-export interface RegisterDto {
-    username: string | undefined;
-    password: string | undefined;
+  accessToken: string | undefined;
+  refreshToken: string | undefined;
 }
 
 export interface ShoppingListEntryViewModel {
-    id: number;
-    name: string | undefined;
-    quantity: string | undefined;
+  id: number;
+  name: string | undefined;
+  quantity: string | undefined;
 }
 
 export interface ShoppingListEntryViewModelPaginatedListViewModel {
-    pageIndex: number;
-    totalPages: number;
-    hasPreviousPage: boolean;
-    hasNextPage: boolean;
-    items: ShoppingListEntryViewModel[] | undefined;
+  readonly offset: number;
+  readonly totalItemCount: number;
+  items: ShoppingListEntryViewModel[] | undefined;
 }
 
 export interface SignInDto {
-    username: string | undefined;
-    password: string | undefined;
+  username: string | undefined;
+  password: string | undefined;
 }
 
 export interface SignOutDto {
-    refreshToken: string | undefined;
+  refreshToken: string | undefined;
+}
+
+export interface SignUpDto {
+  username: string | undefined;
+  password: string | undefined;
 }
 
 export interface TokenViewModel {
-    accessToken: string | undefined;
-    refreshToken: string | undefined;
-    accessTokenExpiryTime: Date;
+  accessToken: string | undefined;
+  refreshToken: string | undefined;
+  accessTokenExpiryTime: Date;
 }
 
 export interface UpdateShoppingListEntryDto {
-    name: string | undefined;
-    quantity: string | undefined;
+  name: string | undefined;
+  quantity: string | undefined;
 }
 
 export interface UpdateUserGroupDto {
-    name: string | undefined;
+  name: string | undefined;
 }
 
 export interface UserGroupViewModel {
-    id: number;
-    name: string | undefined;
-    memberCount: number;
+  id: number;
+  name: string | undefined;
+  memberCount: number;
 }
 
 export interface UserGroupViewModelPaginatedListViewModel {
-    pageIndex: number;
-    totalPages: number;
-    hasPreviousPage: boolean;
-    hasNextPage: boolean;
-    items: UserGroupViewModel[] | undefined;
+  readonly offset: number;
+  readonly totalItemCount: number;
+  items: UserGroupViewModel[] | undefined;
 }
 
 export interface UserViewModel {
-    id: string | undefined;
-    username: string | undefined;
-    groupMembershipCount: number;
+  id: string | undefined;
+  username: string | undefined;
+  groupMembershipCount: number;
 }
 
 export interface UserViewModelPaginatedListViewModel {
-    pageIndex: number;
-    totalPages: number;
-    hasPreviousPage: boolean;
-    hasNextPage: boolean;
-    items: UserViewModel[] | undefined;
+  readonly offset: number;
+  readonly totalItemCount: number;
+  items: UserViewModel[] | undefined;
 }
