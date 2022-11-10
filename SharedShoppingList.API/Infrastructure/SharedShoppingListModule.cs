@@ -30,6 +30,11 @@ namespace SharedShoppingList.API.Infrastructure
                 .AsImplementedInterfaces()
                 .InstancePerDependency();
 
+            // InviteCodeService
+            builder.RegisterType<InviteCodeService>()
+                .AsImplementedInterfaces()
+                .InstancePerDependency();
+
             // UnitOfWork
             builder.RegisterType<UnitOfWork>()
                 .AsImplementedInterfaces()
