@@ -2,10 +2,8 @@
 {
     public class PaginatedListViewModel<T>
     {
-        public int PageIndex { get; set; }
-        public int TotalPages { get; set; }
-        public bool HasPreviousPage { get; set; }
-        public bool HasNextPage { get; set; }
+        public int Offset { get; private set; }
+        public int TotalItemCount { get; private set; }
         public IEnumerable<T> Items { get; set; }
     }
 }
