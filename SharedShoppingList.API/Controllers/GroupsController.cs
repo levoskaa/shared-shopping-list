@@ -47,8 +47,8 @@ namespace SharedShoppingList.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<PaginatedListViewModel<ShoppingListEntryViewModel>> GetShoppingListEntries(
             [FromRoute] int groupId,
-            [FromQuery] int pageSize = 10,
-            [FromQuery] int offset = 0)
+            [FromQuery] int? pageSize,
+            [FromQuery] int? offset)
         {
             var getShoppingListEntriesCommand = new GetShoppingListEntriesCommand
             {

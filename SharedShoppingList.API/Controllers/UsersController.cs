@@ -46,8 +46,8 @@ namespace SharedShoppingList.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
         public async Task<PaginatedListViewModel<UserViewModel>> GetUsers(
-            [FromQuery] int pageSize = 10,
-            [FromQuery] int offset = 0)
+            [FromQuery] int? pageSize,
+            [FromQuery] int? offset)
         {
             var getUsersCommand = new GetUsersCommand
             {
@@ -80,8 +80,8 @@ namespace SharedShoppingList.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<PaginatedListViewModel<UserGroupViewModel>> GetUserGroups(
-            [FromQuery] int pageSize = 10,
-            [FromQuery] int offset = 0)
+            [FromQuery] int? pageSize,
+            [FromQuery] int? offset)
         {
             var getUserGroupsCommand = new GetUserGroupsCommand
             {
