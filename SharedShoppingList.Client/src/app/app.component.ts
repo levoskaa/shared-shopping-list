@@ -7,8 +7,6 @@ import { PrimeNGConfig } from 'primeng/api';
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
-  title = 'shared-shopping-list-client';
-
   constructor(
     private readonly primengConfig: PrimeNGConfig,
     private readonly translate: TranslateService

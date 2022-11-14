@@ -11,5 +11,23 @@
   "createAccount": "create account",
   "alreadyHaveAnAccountQuestion": "Already have an account?",
   "signInSuggestion": "Sign in now!",
-  "confirmPassword": "confirm password"
+  "confirmPassword": "confirm password",
+  "errors": {
+    "title": "An error occured",
+    "codes": {
+      "username_required": "Username is required",
+      "username_taken": "That username is already taken",
+      "password_required": "Password is required",
+      "min_password_length_is_8": "Password must be at least 8 characters long",
+      "password_must_contain_at_least_1_digit": "Password must contain at least one digit",
+      "password_must_contain_at_least_1_lowercase_letter": "Pasword must contain at least one lowercase letter",
+      "password_must_contain_at_least_1_uppercase_letter": "Password must contain at least one uppercase letter",
+      "sign_in_credentials_invalid": "Sign in credentials invalid",
+      "user_id_required": "User identifier is required",
+      "refresh_token_required": "Refresh token is required",
+      "refresh_token_invalid": "Refresh token is invalid",
+      "access_token_invalid": "Access token is invalid",
+      "access_token_verification_failed": "Access token verification failed"
+    }
+  }
 }
