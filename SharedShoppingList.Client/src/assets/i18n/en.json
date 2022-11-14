@@ -12,6 +12,12 @@
   "alreadyHaveAnAccountQuestion": "Already have an account?",
   "signInSuggestion": "Sign in now!",
   "confirmPassword": "confirm password",
+  "details": "details",
+  "createNew": "create new",
+  "userGroups": {
+    "listHeader": "Your groups",
+    "members": "member(s)"
+  },
   "errors": {
     "title": "An error occured",
     "codes": {

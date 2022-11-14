@@ -1,0 +1,13 @@
+@import "colors";
+
+.userGroupContainer {
+  &:hover {
+    background-color: $primary-900;
+  }
+
+  .userGroupDetails {
+    p {
+      margin: 0;
+    }
+  }
+}

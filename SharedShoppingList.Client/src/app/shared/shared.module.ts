@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
+import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { HeaderComponent } from './common-ui/header/header.component';
 import { LayoutComponent } from './common-ui/layout/layout.component';
 import { LogoComponent } from './common-ui/logo/logo.component';
@@ -19,6 +20,7 @@ const uiModules = [
   RippleModule,
   MenuModule,
   ToastModule,
+  VirtualScrollerModule,
 ];
 
 const components = [LayoutComponent, HeaderComponent, LogoComponent];

@@ -19,6 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignInPageComponent } from './components/sign-in-page/sign-in-page.component';
 import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
+import { UserGroupsPageComponent } from './components/user-groups-page/user-groups-page.component';
 import { httpInterceptorProviders } from './core/interceptors';
 import { SharedModule } from './shared/shared.module';
 import { AuthState } from './shared/states/auth/auth.state';
@@ -35,7 +36,12 @@ export function createStorageEngine(): StorageEngine {
 }
 
 @NgModule({
-  declarations: [AppComponent, SignInPageComponent, SignUpPageComponent],
+  declarations: [
+    AppComponent,
+    SignInPageComponent,
+    SignUpPageComponent,
+    UserGroupsPageComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
