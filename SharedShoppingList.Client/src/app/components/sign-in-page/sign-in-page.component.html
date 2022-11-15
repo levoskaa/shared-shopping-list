@@ -24,7 +24,7 @@
                 </div>
             </div>
 
-            <button [disabled]="form.invalid || form.pristine" pButton pRipple
+            <button type="button" [disabled]="form.invalid || form.pristine" pButton pRipple
                 label="{{'signIn' | translate | capitalizeFirst}}" icon="pi pi-user" class="w-full"
                 (click)="signIn()"></button>
         </form>

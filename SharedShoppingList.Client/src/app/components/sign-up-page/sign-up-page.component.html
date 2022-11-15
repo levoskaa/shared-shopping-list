@@ -23,7 +23,7 @@
             <input [formControl]="formControls.password.controls.password2" id="password2" type="password" pInputText
                 class="w-full mb-3" [class.ng-invalid]="formControls.password.invalid">
 
-            <button [disabled]="form.invalid || form.pristine" pButton pRipple
+            <button type="button" [disabled]="form.invalid || form.pristine" pButton pRipple
                 label="{{'signUp' | translate | capitalizeFirst}}" icon="pi pi-user" class="w-full"
                 (click)="signUp()"></button>
         </form>
