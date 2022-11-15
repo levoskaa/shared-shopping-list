@@ -18,6 +18,9 @@
     "listHeader": "Your groups",
     "members": "member(s)"
   },
+  "menu": {
+    "signOut": "sign out"
+  },
   "errors": {
     "title": "An error occured",
     "codes": {

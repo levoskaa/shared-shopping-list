@@ -4,9 +4,9 @@ import { tap } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
 import { extractUserDataFromToken } from '../../../core/utils/extractUserDataFromToken';
 import { getTokenExpiryTime } from '../../../core/utils/getTokenExpiryTime';
-import { TokenViewModel } from '../../models/generated';
+import { SignOutDto, TokenViewModel } from '../../models/generated';
 import { User } from '../../models/user.model';
-import { SignIn, SignUp } from './auth.actions';
+import { SignIn, SignOut, SignUp } from './auth.actions';
 
 interface AuthStateModel {
   tokens: {
@@ -16,17 +16,19 @@ interface AuthStateModel {
   user?: User;
 }
 
+const defaults: AuthStateModel = {
+  tokens: {
+    accessToken: undefined,
+    refreshToken: undefined,
+  },
+  user: undefined,
+};
+
 const AUTH_STATE_TOKEN = new StateToken<AuthStateModel>('auth');
 
 @State({
   name: AUTH_STATE_TOKEN,
-  defaults: {
-    tokens: {
-      accessToken: undefined,
-      refreshToken: undefined,
-    },
-    user: undefined,
-  },
+  defaults,
 })
 @Injectable()
 export class AuthState {
@@ -83,5 +85,16 @@ export class AuthState {
         });
       })
     );
+  }
+
+  @Action(SignOut)
+  signOut(ctx: StateContext<AuthStateModel>) {
+    const state = ctx.getState();
+    const dto: SignOutDto = {
+      refreshToken: state.tokens.refreshToken,
+    };
+    return this.authService
+      .signOut(dto)
+      .pipe(tap(() => ctx.setState(defaults)));
   }
 }

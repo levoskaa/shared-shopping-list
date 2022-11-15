@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { Store } from '@ngxs/store';
+import { MenuItem, PrimeIcons } from 'primeng/api';
+import { tap } from 'rxjs';
+import { SignOut } from '../../states/auth/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -9,11 +14,23 @@ import { MenuItem } from 'primeng/api';
 export class HeaderComponent implements OnInit {
   items!: MenuItem[];
 
-  ngOnInit() {
+  constructor(
+    private readonly translate: TranslateService,
+    private readonly store: Store,
+    private readonly router: Router
+  ) {}
+
+  ngOnInit(): void {
     this.items = [
-      { label: 'New', icon: 'pi pi-fw pi-plus' },
-      { label: 'Open', icon: 'pi pi-fw pi-download' },
-      { label: 'Undo', icon: 'pi pi-fw pi-refresh' },
+      {
+        label: this.translate.instant('menu.signOut'),
+        icon: PrimeIcons.SIGN_OUT,
+        command: () =>
+          this.store
+            .dispatch(new SignOut())
+            .pipe(tap(() => this.router.navigateByUrl('/sign-in')))
+            .subscribe(),
+      },
     ];
   }
 }

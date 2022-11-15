@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   SignInDto,
+  SignOutDto,
   SignUpDto,
   TokenViewModel,
 } from 'src/app/shared/models/generated';
@@ -22,5 +23,9 @@ export class AuthService {
 
   signUp(dto: SignUpDto): Observable<TokenViewModel> {
     return this.httpClient.post(this.usersUrl, dto);
+  }
+
+  signOut(dto: SignOutDto): Observable<void> {
+    return this.httpClient.post(`${this.authUrl}/sign-out`, dto);
   }
 }
