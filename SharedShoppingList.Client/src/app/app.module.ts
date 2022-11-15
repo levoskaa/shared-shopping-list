@@ -21,6 +21,7 @@ import { SignInPageComponent } from './components/sign-in-page/sign-in-page.comp
 import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
 import { UserGroupsPageComponent } from './components/user-groups-page/user-groups-page.component';
 import { httpInterceptorProviders } from './core/interceptors';
+import { CapitalizeFirstPipe } from './core/pipes/capitalize-first.pipe';
 import { SharedModule } from './shared/shared.module';
 import { AuthState } from './shared/states/auth/auth.state';
 
@@ -35,13 +36,17 @@ export function createStorageEngine(): StorageEngine {
   return localStorage;
 }
 
+const components = [
+  AppComponent,
+  SignInPageComponent,
+  SignUpPageComponent,
+  UserGroupsPageComponent,
+];
+
+const pipes = [CapitalizeFirstPipe];
+
 @NgModule({
-  declarations: [
-    AppComponent,
-    SignInPageComponent,
-    SignUpPageComponent,
-    UserGroupsPageComponent,
-  ],
+  declarations: [...components, ...pipes],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
