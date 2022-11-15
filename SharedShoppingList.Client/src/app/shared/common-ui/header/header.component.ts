@@ -21,16 +21,20 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.items = [
-      {
-        label: this.translate.instant('menu.signOut'),
-        icon: PrimeIcons.SIGN_OUT,
-        command: () =>
-          this.store
-            .dispatch(new SignOut())
-            .pipe(tap(() => this.router.navigateByUrl('/sign-in')))
-            .subscribe(),
-      },
-    ];
+    // The labels are not translated without setTimeout().
+    // TODO: try to find a better solution
+    setTimeout(() => {
+      this.items = [
+        {
+          label: this.translate.instant('menu.signOut'),
+          icon: PrimeIcons.SIGN_OUT,
+          command: () =>
+            this.store
+              .dispatch(new SignOut())
+              .pipe(tap(() => this.router.navigateByUrl('/sign-in')))
+              .subscribe(),
+        },
+      ];
+    });
   }
 }
