@@ -14,10 +14,14 @@
   "confirmPassword": "confirm password",
   "details": "details",
   "createNew": "create new",
+  "ok": "ok",
+  "cancel": "cancel",
+  "name": "name",
   "userGroups": {
     "listHeader": "Your groups",
     "members": "member(s)",
-    "joinExisting": "join existing"
+    "joinExisting": "join existing",
+    "createNew": "Create new group"
   },
   "menu": {
     "signOut": "sign out"

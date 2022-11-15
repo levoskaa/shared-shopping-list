@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
 import { RippleModule } from 'primeng/ripple';
@@ -21,6 +22,7 @@ const uiModules = [
   MenuModule,
   ToastModule,
   VirtualScrollerModule,
+  DynamicDialogModule,
 ];
 
 const components = [LayoutComponent, HeaderComponent, LogoComponent];

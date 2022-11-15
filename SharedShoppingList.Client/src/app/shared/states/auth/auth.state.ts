@@ -5,7 +5,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { extractUserDataFromToken } from '../../../core/utils/extractUserDataFromToken';
 import { getTokenExpiryTime } from '../../../core/utils/getTokenExpiryTime';
 import { SignOutDto, TokenViewModel } from '../../models/generated';
-import { User } from '../../models/user.model';
+import { User } from '../../models/user.models';
 import { SignIn, SignOut, SignUp } from './auth.actions';
 
 interface AuthStateModel {

@@ -17,6 +17,7 @@ import { NgxsModule } from '@ngxs/store';
 import { MessageService } from 'primeng/api';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NewUserGroupDialogComponent } from './components/new-user-group-dialog/new-user-group-dialog.component';
 import { SignInPageComponent } from './components/sign-in-page/sign-in-page.component';
 import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
 import { UserGroupsPageComponent } from './components/user-groups-page/user-groups-page.component';
@@ -41,6 +42,7 @@ const components = [
   SignInPageComponent,
   SignUpPageComponent,
   UserGroupsPageComponent,
+  NewUserGroupDialogComponent,
 ];
 
 const pipes = [CapitalizeFirstPipe];
@@ -81,6 +83,7 @@ const pipes = [CapitalizeFirstPipe];
     httpInterceptorProviders,
     MessageService,
   ],
+  entryComponents: [NewUserGroupDialogComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

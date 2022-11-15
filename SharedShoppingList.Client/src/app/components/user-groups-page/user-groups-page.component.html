@@ -4,8 +4,9 @@
         <div class="header">
             <p class="text-xl font-medium text-color m-0 mb-2" translate>userGroups.listHeader</p>
             <div class="header-actions flex justify-content-end">
-                <button pButton type="button" [label]="'createNew' | translate | capitalizeFirst" icon="pi pi-plus"
-                    iconPos="left" class="p-button-success p-button-outlined p-button-sm mr-2"></button>
+                <button pButton type="button" [label]="'createNew' | translate | capitalizeFirst"
+                    (click)="openCreateUserGroupDialog()" icon="pi pi-plus" iconPos="left"
+                    class="p-button-success p-button-outlined p-button-sm mr-2"></button>
                 <button pButton type="button" [label]="'userGroups.joinExisting' | translate | capitalizeFirst"
                     icon="pi pi-sign-in" iconPos="left" class="p-button-primary p-button-outlined p-button-sm"></button>
             </div>

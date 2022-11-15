@@ -1,5 +1,4 @@
-import { Role } from 'src/app/shared/models/role.model';
-import { User } from 'src/app/shared/models/user.model';
+import { Role, User } from 'src/app/shared/models/user.models';
 import { decodeJwt } from './decodeJwt';
 
 export function extractUserDataFromToken(token: string): User {
