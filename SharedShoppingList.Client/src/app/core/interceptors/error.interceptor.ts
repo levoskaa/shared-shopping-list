@@ -8,7 +8,7 @@ import {
 import { Injectable, Injector } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, EMPTY, Observable } from 'rxjs';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -25,17 +25,14 @@ export class ErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((response: HttpErrorResponse) => {
-        const errors = this.extractErrors(response);
-        this.displayErrorToast(response, errors);
-        return throwError(() => new Error(errors.join('; ')));
+        this.displayErrorToast(response);
+        return EMPTY;
       })
     );
   }
 
-  private displayErrorToast(
-    response: HttpErrorResponse,
-    errors: string[]
-  ): void {
+  private displayErrorToast(response: HttpErrorResponse): void {
+    const errors = this.extractErrors(response);
     this.toastService.add({
       severity: 'error',
       summary:
