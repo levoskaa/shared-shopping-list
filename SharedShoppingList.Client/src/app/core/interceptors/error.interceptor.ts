@@ -26,16 +26,21 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((response: HttpErrorResponse) => {
         const errors = this.extractErrors(response);
-        this.displayErrorToast(errors);
+        this.displayErrorToast(response, errors);
         return throwError(() => new Error(errors.join('; ')));
       })
     );
   }
 
-  private displayErrorToast(errors: string[]): void {
+  private displayErrorToast(
+    response: HttpErrorResponse,
+    errors: string[]
+  ): void {
     this.toastService.add({
       severity: 'error',
-      summary: this.translate!.instant('errors.title'),
+      summary:
+        // TODO: add message to errors array as well (in the backend)
+        response.error.message ?? this.translate!.instant('errors.title'),
       detail: errors.join('\n'),
     });
   }
