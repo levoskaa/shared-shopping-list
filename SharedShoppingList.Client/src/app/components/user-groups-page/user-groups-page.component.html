@@ -1,10 +1,14 @@
 <!-- TODO: figure out a workaround to achieve responsive height. If not possible, adjust height for demo. -->
 <p-virtualScroller [value]="userGroups" scrollHeight="400px" [itemSize]="76" class="border-round">
     <ng-template pTemplate="header">
-        <div class="header flex flex-row justify-content-between">
-            <span class=" text-xl font-medium" translate>userGroups.listHeader</span>
-            <button pButton type="button" [label]="'createNew' | translate | capitalizeFirst" icon="pi pi-plus"
-                iconPos="left" class="p-button-success p-button-outlined p-button-sm"></button>
+        <div class="header">
+            <p class="text-xl font-medium text-color m-0 mb-2" translate>userGroups.listHeader</p>
+            <div class="header-actions flex justify-content-end">
+                <button pButton type="button" [label]="'createNew' | translate | capitalizeFirst" icon="pi pi-plus"
+                    iconPos="left" class="p-button-success p-button-outlined p-button-sm mr-2"></button>
+                <button pButton type="button" [label]="'userGroups.joinExisting' | translate | capitalizeFirst"
+                    icon="pi pi-sign-in" iconPos="left" class="p-button-primary p-button-outlined p-button-sm"></button>
+            </div>
         </div>
     </ng-template>
     <ng-template pTemplate="item" let-userGroup>

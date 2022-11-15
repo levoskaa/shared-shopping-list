@@ -16,7 +16,8 @@
   "createNew": "create new",
   "userGroups": {
     "listHeader": "Your groups",
-    "members": "member(s)"
+    "members": "member(s)",
+    "joinExisting": "join existing"
   },
   "menu": {
     "signOut": "sign out"
