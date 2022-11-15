@@ -25,3 +25,9 @@ body {
 * {
   box-sizing: inherit;
 }
+
+@media only screen and (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+}
