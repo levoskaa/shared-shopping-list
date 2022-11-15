@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngxs/store';
 import { MenuItem, PrimeIcons } from 'primeng/api';
 import { tap } from 'rxjs';
+import { TextTransformService } from 'src/app/core/services/text-transform.service';
 import { SignOut } from '../../states/auth/auth.actions';
 
 @Component({
@@ -17,7 +18,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private readonly translate: TranslateService,
     private readonly store: Store,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly textTransform: TextTransformService
   ) {}
 
   ngOnInit(): void {
@@ -26,7 +28,7 @@ export class HeaderComponent implements OnInit {
     setTimeout(() => {
       this.items = [
         {
-          label: this.translate.instant('menu.signOut'),
+          label: this.createLabel('menu.signOut'),
           icon: PrimeIcons.SIGN_OUT,
           command: () =>
             this.store
@@ -36,5 +38,10 @@ export class HeaderComponent implements OnInit {
         },
       ];
     });
+  }
+
+  private createLabel(rawLabel: string): string {
+    const translatedLabel = this.translate.instant(rawLabel);
+    return this.textTransform.capitalizeFirst(translatedLabel);
   }
 }
