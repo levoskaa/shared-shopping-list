@@ -21,7 +21,9 @@
     "listHeader": "Your groups",
     "members": "member(s)",
     "joinExisting": "join existing",
-    "createNew": "Create new group"
+    "createNew": "Create new group",
+    "join": "Join group",
+    "inviteCode": "invite code"
   },
   "menu": {
     "signOut": "sign out"

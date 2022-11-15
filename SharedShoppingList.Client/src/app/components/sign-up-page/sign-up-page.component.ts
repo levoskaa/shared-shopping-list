@@ -11,11 +11,11 @@ import { matchingValuesValidator } from '../../core/validators/matchingValuesVal
 })
 export class SignUpPageComponent {
   formControls = {
-    username: new FormControl(undefined, Validators.required),
+    username: new FormControl('', Validators.required),
     password: new FormGroup(
       {
-        password1: new FormControl(undefined, Validators.required),
-        password2: new FormControl(undefined, Validators.required),
+        password1: new FormControl('', Validators.required),
+        password2: new FormControl('', Validators.required),
       },
       matchingValuesValidator('password1', 'password2')
     ),

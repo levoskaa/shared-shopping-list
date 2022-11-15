@@ -3,10 +3,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngxs/store';
 import { DialogService } from 'primeng/dynamicdialog';
 import { filter, map, Observable, switchMap, tap } from 'rxjs';
-import { UsersService } from 'src/app/core/services/users.service';
+import { UserGroupService } from 'src/app/core/services/user-group.service';
 import { DialogCloseType } from 'src/app/shared/models/dialog.models';
 import { UserGroupViewModel } from 'src/app/shared/models/generated';
 import { AuthState } from 'src/app/shared/states/auth/auth.state';
+import { JoinUserGroupDialogComponent } from '../join-user-group-dialog/join-user-group-dialog.component';
 import { NewUserGroupDialogComponent } from '../new-user-group-dialog/new-user-group-dialog.component';
 
 @Component({
@@ -20,7 +21,7 @@ export class UserGroupsPageComponent implements OnInit {
   private username?: string;
 
   constructor(
-    private readonly usersService: UsersService,
+    private readonly userGroupService: UserGroupService,
     private readonly store: Store,
     public readonly dialogService: DialogService,
     private readonly translate: TranslateService
@@ -47,8 +48,24 @@ export class UserGroupsPageComponent implements OnInit {
       .subscribe();
   }
 
+  openJoinUserGroupDialog(): void {
+    const dialogRef = this.dialogService.open(JoinUserGroupDialogComponent, {
+      header: this.translate.instant('userGroups.join'),
+      width: '80%',
+    });
+    dialogRef.onClose
+      .pipe(
+        filter(
+          (dialogClosed) =>
+            dialogClosed?.closeType === DialogCloseType.Successful
+        ),
+        switchMap(() => this.getUserGroups())
+      )
+      .subscribe();
+  }
+
   private getUserGroups(): Observable<UserGroupViewModel[]> {
-    return this.usersService.getUserGroups(this.username!).pipe(
+    return this.userGroupService.getUserGroups(this.username!).pipe(
       map((response) => response.items ?? []),
       tap((userGroups: UserGroupViewModel[]) => (this.userGroups = userGroups))
     );

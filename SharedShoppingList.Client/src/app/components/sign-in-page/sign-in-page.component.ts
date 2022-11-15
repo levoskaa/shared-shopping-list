@@ -11,8 +11,8 @@ import { SignIn } from 'src/app/shared/states/auth/auth.actions';
 })
 export class SignInPageComponent {
   formControls: Record<keyof SignInDto, FormControl> = {
-    username: new FormControl(undefined, Validators.required),
-    password: new FormControl(undefined, Validators.required),
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
   };
   form = new FormGroup(this.formControls);
 

@@ -8,7 +8,8 @@
                     (click)="openCreateUserGroupDialog()" icon="pi pi-plus" iconPos="left"
                     class="p-button-success p-button-outlined p-button-sm mr-2"></button>
                 <button pButton type="button" [label]="'userGroups.joinExisting' | translate | capitalizeFirst"
-                    icon="pi pi-sign-in" iconPos="left" class="p-button-primary p-button-outlined p-button-sm"></button>
+                    (click)="openJoinUserGroupDialog()" icon="pi pi-sign-in" iconPos="left"
+                    class="p-button-primary p-button-outlined p-button-sm"></button>
             </div>
         </div>
     </ng-template>

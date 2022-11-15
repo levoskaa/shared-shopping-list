@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { tap } from 'rxjs';
-import { UsersService } from 'src/app/core/services/users.service';
+import { UserGroupService } from 'src/app/core/services/user-group.service';
 import {
   DialogClosedEvent,
   DialogCloseType,
@@ -16,14 +16,14 @@ import { AuthState } from 'src/app/shared/states/auth/auth.state';
 })
 export class NewUserGroupDialogComponent implements OnInit {
   formControls: Record<keyof CreateUserGroupDto, FormControl> = {
-    name: new FormControl(undefined, Validators.required),
+    name: new FormControl('', Validators.required),
   };
   form = new FormGroup(this.formControls);
 
   private username?: string;
 
   constructor(
-    private readonly usersService: UsersService,
+    private readonly userGroupService: UserGroupService,
     private readonly store: Store,
     private readonly dialogRef: DynamicDialogRef
   ) {}
@@ -39,7 +39,7 @@ export class NewUserGroupDialogComponent implements OnInit {
     const dto: CreateUserGroupDto = {
       name: this.form.value.name,
     };
-    this.usersService
+    this.userGroupService
       .createUserGroup(this.username!, dto)
       .pipe(
         tap(() => {

@@ -10,8 +10,9 @@ import { AppHttpClient } from '../http-clients/app-http-client';
 @Injectable({
   providedIn: 'root',
 })
-export class UsersService {
+export class UserGroupService {
   private readonly usersUrl = 'Users';
+  private readonly groupsUrl = 'Groups';
 
   constructor(private readonly http: AppHttpClient) {}
 
@@ -20,6 +21,10 @@ export class UsersService {
     dto: CreateUserGroupDto
   ): Observable<UserGroupViewModel> {
     return this.http.post(`${this.usersUrl}/${username}/groups`, dto);
+  }
+
+  joinUserGroup(inviteCode: string): Observable<void> {
+    return this.http.post(`${this.groupsUrl}/join/${inviteCode}`, {});
   }
 
   getUserGroups(
