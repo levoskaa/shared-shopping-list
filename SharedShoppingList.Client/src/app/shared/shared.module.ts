@@ -8,6 +8,7 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
 import { RippleModule } from 'primeng/ripple';
+import { TabViewModule } from 'primeng/tabview';
 import { ToastModule } from 'primeng/toast';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { HeaderComponent } from './common-ui/header/header.component';
@@ -23,6 +24,7 @@ const uiModules = [
   ToastModule,
   VirtualScrollerModule,
   DynamicDialogModule,
+  TabViewModule,
 ];
 
 const components = [LayoutComponent, HeaderComponent, LogoComponent];

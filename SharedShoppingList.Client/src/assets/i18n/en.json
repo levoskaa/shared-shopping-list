@@ -23,7 +23,9 @@
     "joinExisting": "join existing",
     "createNew": "Create new group",
     "join": "Join group",
-    "inviteCode": "invite code"
+    "inviteCode": "invite code",
+    "inviteCodes": "invite codes",
+    "shoppingList": "shopping list"
   },
   "menu": {
     "signOut": "sign out"
