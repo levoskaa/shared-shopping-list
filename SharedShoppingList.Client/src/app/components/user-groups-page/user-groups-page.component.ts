@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngxs/store';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -24,7 +25,8 @@ export class UserGroupsPageComponent implements OnInit {
     private readonly userGroupService: UserGroupService,
     private readonly store: Store,
     public readonly dialogService: DialogService,
-    private readonly translate: TranslateService
+    private readonly translate: TranslateService,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -62,6 +64,10 @@ export class UserGroupsPageComponent implements OnInit {
         switchMap(() => this.getUserGroups())
       )
       .subscribe();
+  }
+
+  navigateToUserGroupDetails(id: string): void {
+    this.router.navigate(['group', id]);
   }
 
   private getUserGroups(): Observable<UserGroupViewModel[]> {

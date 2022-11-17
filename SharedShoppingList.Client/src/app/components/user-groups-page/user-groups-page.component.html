@@ -22,7 +22,7 @@
             </div>
             <div class="userGroupActions">
                 <button pButton type="button" [label]="'details' | translate | capitalizeFirst"
-                    class="p-button-rounded p-button-sm"></button>
+                    (click)="navigateToUserGroupDetails(userGroup.id)" class="p-button-rounded p-button-sm"></button>
             </div>
         </div>
     </ng-template>

@@ -21,6 +21,7 @@ import { JoinUserGroupDialogComponent } from './components/join-user-group-dialo
 import { NewUserGroupDialogComponent } from './components/new-user-group-dialog/new-user-group-dialog.component';
 import { SignInPageComponent } from './components/sign-in-page/sign-in-page.component';
 import { SignUpPageComponent } from './components/sign-up-page/sign-up-page.component';
+import { UserGroupDetailsPageComponent } from './components/user-group-details-page/user-group-details-page.component';
 import { UserGroupsPageComponent } from './components/user-groups-page/user-groups-page.component';
 import { httpInterceptorProviders } from './core/interceptors';
 import { CapitalizeFirstPipe } from './core/pipes/capitalize-first.pipe';
@@ -43,6 +44,7 @@ const components = [
   SignInPageComponent,
   SignUpPageComponent,
   UserGroupsPageComponent,
+  UserGroupDetailsPageComponent,
 ];
 
 const dialogs = [NewUserGroupDialogComponent, JoinUserGroupDialogComponent];
