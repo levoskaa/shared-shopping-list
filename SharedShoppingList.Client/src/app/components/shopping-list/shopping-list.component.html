@@ -1,0 +1,28 @@
+<!-- TODO: figure out a workaround to achieve responsive height. If not possible, adjust height for demo. -->
+<p-virtualScroller [value]="items" scrollHeight="400px" [itemSize]="76" class="border-round">
+    <ng-template pTemplate="header">
+        <div class="header">
+            <div class="header-actions flex justify-content-end">
+                <button pButton type="button" [label]="'createNew' | translate | capitalizeFirst"
+                    (click)="openCreateShoppingListEntryDialog()" icon="pi pi-plus" iconPos="left"
+                    class="p-button-success p-button-outlined p-button-sm mr-2"></button>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="item" let-shoppingListEntry>
+        <div
+            class="shopping-list-container flex flex-row justify-content-between align-items-center p-3 m-2 border-round">
+            <div class="shopping-list-details flex flex-row justify-content-between w-8">
+                <span class="text-l font-medium">{{shoppingListEntry.name}}</span>
+                <span class="text-l">{{shoppingListEntry.quantity}}</span>
+            </div>
+            <div class="shopping-list-actions flex flex-row justify-content-end w-4">
+                <button pButton type="button" icon="pi pi-pencil" (click)="editShoppingListEntry(shoppingListEntry.id)"
+                    class="p-button-rounded p-button-outlined p-button-sm mr-4"></button>
+                <button pButton type="button" icon="pi pi-trash" (click)="deleteShoppingListEntry(shoppingListEntry.id)"
+                    class="p-button-rounded p-button-outlined p-button-sm p-button-danger"></button>
+
+            </div>
+        </div>
+    </ng-template>
+</p-virtualScroller>

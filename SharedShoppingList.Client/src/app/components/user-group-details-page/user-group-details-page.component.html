@@ -1,8 +1,10 @@
-<p-tabView>
-    <p-tabPanel [header]="'userGroups.shoppingList' | translate | capitalizeFirst">
-        TODO
-    </p-tabPanel>
-    <p-tabPanel [header]="'userGroups.inviteCodes' | translate | capitalizeFirst" [disabled]="true">
-        TODO
-    </p-tabPanel>
-</p-tabView>
+<div class="user-group-details-page">
+    <p-tabView>
+        <p-tabPanel [header]="'userGroups.shoppingList' | translate | capitalizeFirst">
+            <app-shopping-list [groupId]="groupId"></app-shopping-list>
+        </p-tabPanel>
+        <p-tabPanel [header]="'userGroups.inviteCodes' | translate | capitalizeFirst" [disabled]="true">
+            TODO
+        </p-tabPanel>
+    </p-tabView>
+</div>

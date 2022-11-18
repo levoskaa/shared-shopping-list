@@ -1,11 +1,11 @@
 @import "colors";
 
-.user-group-container {
+.shopping-list-container {
   &:hover {
     background-color: $primary-900;
   }
 
-  .user-group-details {
+  .shopping-list-details {
     p {
       margin: 0;
     }

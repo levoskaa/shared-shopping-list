@@ -17,6 +17,7 @@
   "ok": "ok",
   "cancel": "cancel",
   "name": "name",
+  "quantity": "quantity",
   "userGroups": {
     "listHeader": "Your groups",
     "members": "member(s)",
@@ -26,6 +27,10 @@
     "inviteCode": "invite code",
     "inviteCodes": "invite codes",
     "shoppingList": "shopping list"
+  },
+  "shoppingList": {
+    "createNew": "Create new entry",
+    "edit": "Edit entry"
   },
   "menu": {
     "signOut": "sign out"
