@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
@@ -25,6 +26,7 @@ const uiModules = [
   VirtualScrollerModule,
   DynamicDialogModule,
   TabViewModule,
+  ConfirmDialogModule,
 ];
 
 const components = [LayoutComponent, HeaderComponent, LogoComponent];

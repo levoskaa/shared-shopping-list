@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { tap } from 'rxjs';
-import { UserGroupService } from 'src/app/core/services/user-group.service';
+import { ShoppingListService } from 'src/app/core/services/shopping-list.service';
 import {
   DialogClosedEvent,
   DialogCloseType,
@@ -24,7 +24,7 @@ export class UpsertShoppingListEntryDialogComponent implements OnInit {
 
   constructor(
     private readonly config: DynamicDialogConfig,
-    private readonly userGroupService: UserGroupService,
+    private readonly shoppingListService: ShoppingListService,
     private readonly dialogRef: DynamicDialogRef
   ) {}
 
@@ -58,7 +58,7 @@ export class UpsertShoppingListEntryDialogComponent implements OnInit {
       name: this.form.value.name,
       quantity: this.form.value.quantity,
     };
-    this.userGroupService
+    this.shoppingListService
       .createShoppingListEntry(this.config.data.groupId, dto)
       .pipe(
         tap(() => {
@@ -76,7 +76,7 @@ export class UpsertShoppingListEntryDialogComponent implements OnInit {
       name: this.form.value.name,
       quantity: this.form.value.quantity,
     };
-    this.userGroupService
+    this.shoppingListService
       .updateShoppingListEntry(
         this.config.data.groupId,
         this.config.data.shoppingListEntry.id,

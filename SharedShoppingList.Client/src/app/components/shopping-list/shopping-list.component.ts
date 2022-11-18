@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { ConfirmationService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { filter, map, Observable, switchMap, tap } from 'rxjs';
-import { UserGroupService } from 'src/app/core/services/user-group.service';
+import { ShoppingListService } from 'src/app/core/services/shopping-list.service';
 import { DialogCloseType } from 'src/app/shared/models/dialog.models';
 import { ShoppingListEntryViewModel } from 'src/app/shared/models/generated';
 import { UpsertShoppingListEntryDialogComponent } from '../upsert-shopping-list-entry-dialog/upsert-shopping-list-entry-dialog.component';
@@ -10,7 +11,7 @@ import { UpsertShoppingListEntryDialogComponent } from '../upsert-shopping-list-
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
-  providers: [DialogService],
+  providers: [DialogService, ConfirmationService],
 })
 export class ShoppingListComponent implements OnInit {
   @Input() groupId!: number;
@@ -18,9 +19,10 @@ export class ShoppingListComponent implements OnInit {
   items: ShoppingListEntryViewModel[] = [];
 
   constructor(
-    private readonly userGroupSerive: UserGroupService,
+    private readonly shoppingListService: ShoppingListService,
     private readonly dialogService: DialogService,
-    private readonly translate: TranslateService
+    private readonly translate: TranslateService,
+    private readonly confirmationService: ConfirmationService
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +37,18 @@ export class ShoppingListComponent implements OnInit {
     this.openUpsertDialog(false, id);
   }
 
-  deleteShoppingListEntry(id: number): void {}
+  deleteShoppingListEntry(id: number): void {
+    this.confirmationService.confirm({
+      message: this.translate.instant('shoppingList.deleteWarning'),
+      accept: () =>
+        this.shoppingListService
+          .deleteShoppingListEntry(this.groupId, id)
+          .pipe(switchMap(() => this.getShoppingListEntries()))
+          .subscribe(),
+      acceptButtonStyleClass: 'p-button-danger',
+      rejectButtonStyleClass: 'p-button-text p-button-secondary',
+    });
+  }
 
   private openUpsertDialog(isNew: boolean, shoppingListEntryId?: number): void {
     const dialogRef = this.dialogService.open(
@@ -66,7 +79,7 @@ export class ShoppingListComponent implements OnInit {
   }
 
   private getShoppingListEntries(): Observable<ShoppingListEntryViewModel[]> {
-    return this.userGroupSerive.getShoppingListEntries(this.groupId).pipe(
+    return this.shoppingListService.getShoppingListEntries(this.groupId).pipe(
       map((response) => response.items ?? []),
       tap((shoppingListItems) => (this.items = shoppingListItems))
     );
