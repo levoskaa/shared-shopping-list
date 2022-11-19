@@ -20,7 +20,9 @@ export class AppHttpClient {
     url: string,
     params?: TParams
   ): Observable<TResponse> {
-    const paramsWithoutNils = JSON.parse(JSON.stringify(params));
+    const paramsWithoutNils = params
+      ? JSON.parse(JSON.stringify(params))
+      : undefined;
     return this.httpClient.get<TResponse>(`${environment.apiBaseUrl}/${url}`, {
       params: paramsWithoutNils,
     });

@@ -11,6 +11,7 @@ import { UpsertShoppingListEntryDialogComponent } from '../upsert-shopping-list-
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
+  styleUrls: ['./shopping-list.component.scss'],
   providers: [DialogService, ConfirmationService],
 })
 export class ShoppingListComponent implements OnInit {

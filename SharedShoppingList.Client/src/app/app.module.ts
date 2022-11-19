@@ -17,6 +17,7 @@ import { NgxsModule } from '@ngxs/store';
 import { MessageService } from 'primeng/api';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { InviteCodesListComponent } from './components/invite-codes-list/invite-codes-list.component';
 import { JoinUserGroupDialogComponent } from './components/join-user-group-dialog/join-user-group-dialog.component';
 import { NewUserGroupDialogComponent } from './components/new-user-group-dialog/new-user-group-dialog.component';
 import { ShoppingListComponent } from './components/shopping-list/shopping-list.component';
@@ -48,6 +49,7 @@ const components = [
   UserGroupsPageComponent,
   UserGroupDetailsPageComponent,
   ShoppingListComponent,
+  InviteCodesListComponent,
 ];
 
 const dialogs = [

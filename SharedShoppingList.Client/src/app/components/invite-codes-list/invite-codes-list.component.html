@@ -1,0 +1,7 @@
+<!-- Can't use VirtualScroller in TabView, breaks even with this workaround:
+    https://stackoverflow.com/questions/54029420/primeng-virtualscroller-in-tabview-not-working-out-properly-->
+<div class="invite-code-container flex justify-content-center align-items-center p-4">
+    <span *ngIf="inviteCodes[0]" class="text-5xl font-medium mr-2">{{inviteCodes[0].value}}</span>
+    <button pButton type="button" icon="pi pi-refresh" (click)="regenerateInviteCode()"
+        class="p-button-rounded p-button-outlined p-button-sm"></button>
+</div>
