@@ -95,19 +95,22 @@ namespace SharedShoppingList.API.Controllers
 
         [HttpGet("{username}/groups/{groupId}")]
         [Authorize(Policy = "MatchingUsername")]
-        [ProducesResponseType(typeof(UserGroupViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(UserGroupDetailsViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<UserGroupViewModel> GetUserGroup([FromRoute] int groupId)
+        public async Task<UserGroupDetailsViewModel> GetUserGroup([FromRoute] int groupId)
         {
+            var userId = identityHelper.GetAuthenticatedUserId();
             var getUserGroupCommand = new GetUserGroupCommand
             {
-                UserId = identityHelper.GetAuthenticatedUserId(),
+                UserId = userId,
                 GroupId = groupId,
             };
             var userGroup = await mediator.Send(getUserGroupCommand);
-            return mapper.Map<UserGroupViewModel>(userGroup);
+            var viewModel = mapper.Map<UserGroupDetailsViewModel>(userGroup);
+            viewModel.IsOwnedByUser = userGroup.OwnerId == userId;
+            return viewModel;
         }
 
         [HttpPut("{username}/groups/{groupId}")]
