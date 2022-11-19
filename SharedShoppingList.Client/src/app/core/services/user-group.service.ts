@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   CreateUserGroupDto,
+  UserGroupDetailsViewModel,
   UserGroupViewModel,
   UserGroupViewModelPaginatedListViewModel,
 } from 'src/app/shared/models/generated';
@@ -36,5 +37,12 @@ export class UserGroupService {
       pageSize,
       offset,
     });
+  }
+
+  getUserGroup(
+    username: string,
+    groupId: number
+  ): Observable<UserGroupDetailsViewModel> {
+    return this.http.get(`${this.usersUrl}/${username}/groups/${groupId}`);
   }
 }

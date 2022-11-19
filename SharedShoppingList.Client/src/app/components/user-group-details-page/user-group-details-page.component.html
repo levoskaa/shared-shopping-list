@@ -3,8 +3,10 @@
         <p-tabPanel [header]="'userGroups.shoppingList' | translate | capitalizeFirst">
             <app-shopping-list [groupId]="groupId"></app-shopping-list>
         </p-tabPanel>
-        <p-tabPanel [header]="'userGroups.inviteCode' | translate | capitalizeFirst" [disabled]="false">
-            <app-invite-codes-list [groupId]="groupId"></app-invite-codes-list>
+        <p-tabPanel [header]="'userGroups.inviteCode' | translate | capitalizeFirst"
+            [disabled]="!userGroup.isOwnedByUser">
+            <app-invite-codes-list [groupId]=" groupId" *ngIf="userGroup.isOwnedByUser">
+            </app-invite-codes-list>
         </p-tabPanel>
     </p-tabView>
 </div>
