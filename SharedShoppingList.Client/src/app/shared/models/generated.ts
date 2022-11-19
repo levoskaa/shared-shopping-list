@@ -49,7 +49,7 @@ export interface ShoppingListEntryViewModel {
 }
 
 export interface ShoppingListEntryViewModelPaginatedListViewModel {
-  readonly offset: number;
+  readonly offset: number | undefined;
   readonly totalItemCount: number;
   items: ShoppingListEntryViewModel[] | undefined;
 }
@@ -83,6 +83,13 @@ export interface UpdateUserGroupDto {
   name: string | undefined;
 }
 
+export interface UserGroupDetailsViewModel {
+  id: number;
+  name: string | undefined;
+  members: string[] | undefined;
+  isOwnedByUser: boolean;
+}
+
 export interface UserGroupViewModel {
   id: number;
   name: string | undefined;
@@ -90,7 +97,7 @@ export interface UserGroupViewModel {
 }
 
 export interface UserGroupViewModelPaginatedListViewModel {
-  readonly offset: number;
+  readonly offset: number | undefined;
   readonly totalItemCount: number;
   items: UserGroupViewModel[] | undefined;
 }
@@ -102,7 +109,7 @@ export interface UserViewModel {
 }
 
 export interface UserViewModelPaginatedListViewModel {
-  readonly offset: number;
+  readonly offset: number | undefined;
   readonly totalItemCount: number;
   items: UserViewModel[] | undefined;
 }
