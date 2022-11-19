@@ -7,7 +7,11 @@ header {
   clip-path: inset(0 0 -0.3rem 0);
   background-color: $blue-900;
 
-  .app-logo {
-    font-size: 10px;
+  .logo-container {
+    cursor: pointer;
+
+    .app-logo {
+      font-size: 10px;
+    }
   }
 }

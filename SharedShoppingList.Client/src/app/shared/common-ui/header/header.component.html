@@ -1,6 +1,8 @@
 <header class="flex align-items-center px-4 py-2 text-2xl font-medium">
-    <app-logo></app-logo>
-    <span class="ml-2" translate>appName</span>
+    <div class="logo-container flex align-items-center" routerLink="/">
+        <app-logo></app-logo>
+        <span class="ml-2" translate>appName</span>
+    </div>
     <button type="button" pButton icon="pi pi-list" (click)="menu.toggle($event)"
         class="p-button-rounded p-button-outlined ml-auto"></button>
 </header>
