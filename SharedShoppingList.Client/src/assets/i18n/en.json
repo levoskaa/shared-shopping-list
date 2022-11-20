@@ -20,6 +20,7 @@
   "quantity": "quantity",
   "confirmRemoval": "confirm removal",
   "regenerate": "regenerate",
+  "signedInAs": "Signed in as",
   "userGroups": {
     "listHeader": "Your groups",
     "membersLabel": "member(s)",

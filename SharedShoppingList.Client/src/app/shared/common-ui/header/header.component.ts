@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { MenuItem, PrimeIcons } from 'primeng/api';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { TextTransformService } from 'src/app/core/services/text-transform.service';
+import { User } from '../../models/user.models';
 import { SignOut } from '../../states/auth/auth.actions';
+import { AuthState } from '../../states/auth/auth.state';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +16,7 @@ import { SignOut } from '../../states/auth/auth.actions';
 })
 export class HeaderComponent implements OnInit {
   items!: MenuItem[];
+  @Select(AuthState.user) user$!: Observable<User>;
 
   constructor(
     private readonly translate: TranslateService,

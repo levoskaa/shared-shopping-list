@@ -35,7 +35,7 @@ const components = [LayoutComponent, HeaderComponent, LogoComponent];
 
 @NgModule({
   declarations: [...components],
-  imports: [RouterModule, TranslateModule, ...uiModules],
+  imports: [CommonModule, RouterModule, TranslateModule, ...uiModules],
   exports: [CommonModule, TranslateModule, ...uiModules, ...components],
 })
 export class SharedModule {}

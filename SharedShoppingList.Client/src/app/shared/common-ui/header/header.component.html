@@ -1,10 +1,14 @@
-<header class="flex align-items-center px-4 py-2 text-2xl font-medium">
-    <div class="logo-container flex align-items-center" routerLink="/">
+<header class="flex align-items-center p-4 relative">
+    <div class="logo-container flex align-items-center text-2xl font-medium" routerLink="/">
         <app-logo></app-logo>
         <span class="ml-2" translate>appName</span>
     </div>
     <button type="button" pButton icon="pi pi-list" (click)="menu.toggle($event)"
         class="p-button-rounded p-button-outlined ml-auto"></button>
+    <span *ngIf="user$ | async as user" class="user-info text-color-secondary text-sm absolute">{{'signedInAs' |
+        translate}}
+        <span class="font-italic">{{user.username}}</span>
+    </span>
 </header>
 
 <p-menu #menu [popup]="true" [model]="items"></p-menu>
