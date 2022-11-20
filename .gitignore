@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,dotnetcore,angular,react
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,visualstudiocode,dotnetcore,angular,react
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,dotnetcore,angular
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,visualstudiocode,dotnetcore,angular
 
 secrets.json
 
@@ -49,22 +49,6 @@ obj/
 # Common node modules locations
 /node_modules
 /wwwroot/node_modules
-
-### react ###
-.DS_*
-*.log
-logs
-**/*.backup.*
-**/*.back.*
-
-node_modules
-bower_components
-
-*.sublime*
-
-psd
-thumb
-sketch
 
 ### VisualStudioCode ###
 .vscode/*
@@ -482,4 +466,4 @@ FodyWeavers.xsd
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,dotnetcore,angular,react
+# End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,dotnetcore,angular

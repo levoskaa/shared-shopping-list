@@ -1,0 +1,7 @@
+@import "colors";
+
+.shopping-list-container {
+  &:hover {
+    background-color: $primary-900;
+  }
+}

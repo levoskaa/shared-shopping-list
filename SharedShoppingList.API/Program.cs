@@ -157,6 +157,19 @@ builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 // HealthChecks
 builder.Services.AddHealthChecks();
+
+// CORS
+const string devCorsPolicy = "AllowDevOrigin";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: devCorsPolicy,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        });
+});
 #endregion
 
 var app = builder.Build();
@@ -185,20 +198,23 @@ using (var dbContext = scope.ServiceProvider.GetService<SharedShoppingListContex
 #endregion
 
 #region Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionHandlerMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.MapHealthChecks("/health");
+app.UseRouting();
 
-app.UseMiddleware<ExceptionHandlerMiddleware>();
+app.UseCors(devCorsPolicy);
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run();
 #endregion

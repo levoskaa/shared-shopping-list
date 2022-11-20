@@ -12,7 +12,7 @@ namespace SharedShoppingList.API.Infrastructure.MapperProfiles
         public UserProfile()
         {
             CreateMap<SignInDto, SignInCommand>();
-            CreateMap<RegisterDto, CreateUserCommand>();
+            CreateMap<SignUpDto, CreateUserCommand>();
             CreateMap<SignOutDto, SignOutCommand>();
             CreateMap<User, UserViewModel>()
                 .ForMember(

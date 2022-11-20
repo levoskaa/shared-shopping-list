@@ -1,0 +1,30 @@
+<!-- TODO: figure out a workaround to achieve responsive height. If not possible, adjust height for demo. -->
+<p-virtualScroller [value]="userGroups" scrollHeight="400px" [itemSize]="76" class="border-round">
+    <ng-template pTemplate="header">
+        <div class="header">
+            <p class="text-xl font-medium text-color m-0 mb-2" translate>userGroups.listHeader</p>
+            <div class="header-actions flex justify-content-end">
+                <button pButton type="button" [label]="'createNew' | translate | capitalizeFirst"
+                    (click)="openCreateUserGroupDialog()" icon="pi pi-plus" iconPos="left"
+                    class="p-button-success p-button-outlined p-button-sm mr-2"></button>
+                <button pButton type="button" [label]="'userGroups.joinExisting' | translate | capitalizeFirst"
+                    (click)="openJoinUserGroupDialog()" icon="pi pi-sign-in" iconPos="left"
+                    class="p-button-primary p-button-outlined p-button-sm"></button>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="item" let-userGroup>
+        <div class="user-group-container flex flex-row justify-content-between align-items-center p-3 m-2 border-round">
+            <div class="flex flex-column justify-content-center">
+                <span class="text-l font-medium mb-1">{{userGroup.name}}</span>
+                <span class="text-sm text-color-secondary">
+                    {{userGroup.memberCount}} {{'userGroups.membersLabel' | translate}}
+                </span>
+            </div>
+            <div class="user-group-actions">
+                <button pButton type="button" [label]="'details' | translate | capitalizeFirst"
+                    (click)="navigateToUserGroupDetails(userGroup.id)" class="p-button-rounded p-button-sm"></button>
+            </div>
+        </div>
+    </ng-template>
+</p-virtualScroller>

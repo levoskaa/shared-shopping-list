@@ -22,7 +22,7 @@ namespace SharedShoppingList.API.Application.Commands.UserCommands
             return PaginatedList<User>.CreateAsync(
                 query,
                 command.PageSize,
-                command.PageIndex);
+                command.Offset);
         }
     }
 }

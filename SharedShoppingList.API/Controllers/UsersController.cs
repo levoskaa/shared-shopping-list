@@ -33,7 +33,7 @@ namespace SharedShoppingList.API.Controllers
         [AllowAnonymous]
         [ProducesResponseType(typeof(TokenViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorViewModel), (int)HttpStatusCode.BadRequest)]
-        public async Task<TokenViewModel> CreateUser([FromBody] RegisterDto dto)
+        public async Task<TokenViewModel> CreateUser([FromBody] SignUpDto dto)
         {
             var createUserCommand = mapper.Map<CreateUserCommand>(dto);
             var token = await mediator.Send(createUserCommand);
@@ -46,13 +46,13 @@ namespace SharedShoppingList.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
         public async Task<PaginatedListViewModel<UserViewModel>> GetUsers(
-            [FromQuery] int pageSize = 10,
-            [FromQuery] int pageIndex = 1)
+            [FromQuery] int? pageSize,
+            [FromQuery] int? offset)
         {
             var getUsersCommand = new GetUsersCommand
             {
                 PageSize = pageSize,
-                PageIndex = pageIndex,
+                Offset = offset,
             };
             var users = await mediator.Send(getUsersCommand);
             return mapper.Map<PaginatedListViewModel<UserViewModel>>(users);
@@ -80,13 +80,13 @@ namespace SharedShoppingList.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<PaginatedListViewModel<UserGroupViewModel>> GetUserGroups(
-            [FromQuery] int pageSize = 10,
-            [FromQuery] int pageIndex = 1)
+            [FromQuery] int? pageSize,
+            [FromQuery] int? offset)
         {
             var getUserGroupsCommand = new GetUserGroupsCommand
             {
                 PageSize = pageSize,
-                PageIndex = pageIndex,
+                Offset = offset,
                 UserId = identityHelper.GetAuthenticatedUserId(),
             };
             var userGroups = await mediator.Send(getUserGroupsCommand);
@@ -95,19 +95,22 @@ namespace SharedShoppingList.API.Controllers
 
         [HttpGet("{username}/groups/{groupId}")]
         [Authorize(Policy = "MatchingUsername")]
-        [ProducesResponseType(typeof(UserGroupViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(UserGroupDetailsViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<UserGroupViewModel> GetUserGroup([FromRoute] int groupId)
+        public async Task<UserGroupDetailsViewModel> GetUserGroup([FromRoute] int groupId)
         {
+            var userId = identityHelper.GetAuthenticatedUserId();
             var getUserGroupCommand = new GetUserGroupCommand
             {
-                UserId = identityHelper.GetAuthenticatedUserId(),
+                UserId = userId,
                 GroupId = groupId,
             };
             var userGroup = await mediator.Send(getUserGroupCommand);
-            return mapper.Map<UserGroupViewModel>(userGroup);
+            var viewModel = mapper.Map<UserGroupDetailsViewModel>(userGroup);
+            viewModel.IsOwnedByUser = userGroup.OwnerId == userId;
+            return viewModel;
         }
 
         [HttpPut("{username}/groups/{groupId}")]

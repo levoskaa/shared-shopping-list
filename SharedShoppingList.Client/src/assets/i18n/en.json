@@ -1,0 +1,60 @@
+{
+  "appName": "Shoppy",
+  "welcomeBack": "welcome back",
+  "noAccountQuestion": "Don't have an account?",
+  "createAccountSuggestion": "Create one today!",
+  "username": "username",
+  "password": "password",
+  "rememberMe": "Remember me",
+  "signIn": "sign in",
+  "signUp": "sign up",
+  "createAccount": "create account",
+  "alreadyHaveAnAccountQuestion": "Already have an account?",
+  "signInSuggestion": "Sign in now!",
+  "confirmPassword": "confirm password",
+  "details": "details",
+  "createNew": "create new",
+  "ok": "ok",
+  "cancel": "cancel",
+  "name": "name",
+  "quantity": "quantity",
+  "confirmRemoval": "confirm removal",
+  "regenerate": "regenerate",
+  "signedInAs": "Signed in as",
+  "userGroups": {
+    "listHeader": "Your groups",
+    "membersLabel": "member(s)",
+    "joinExisting": "join existing",
+    "createNew": "Create new group",
+    "join": "Join group",
+    "inviteCode": "invite code",
+    "shoppingList": "shopping list",
+    "members": "members"
+  },
+  "shoppingList": {
+    "createNew": "Create new entry",
+    "edit": "Edit entry",
+    "deleteWarning": "Are you sure that you want to delete this entry?"
+  },
+  "menu": {
+    "signOut": "sign out"
+  },
+  "errors": {
+    "title": "An error occured",
+    "codes": {
+      "username_required": "Username is required",
+      "username_taken": "That username is already taken",
+      "password_required": "Password is required",
+      "min_password_length_is_8": "Password must be at least 8 characters long",
+      "password_must_contain_at_least_1_digit": "Password must contain at least one digit",
+      "password_must_contain_at_least_1_lowercase_letter": "Pasword must contain at least one lowercase letter",
+      "password_must_contain_at_least_1_uppercase_letter": "Password must contain at least one uppercase letter",
+      "sign_in_credentials_invalid": "Sign in credentials invalid",
+      "user_id_required": "User identifier is required",
+      "refresh_token_required": "Refresh token is required",
+      "refresh_token_invalid": "Refresh token is invalid",
+      "access_token_invalid": "Access token is invalid",
+      "access_token_verification_failed": "Access token verification failed"
+    }
+  }
+}

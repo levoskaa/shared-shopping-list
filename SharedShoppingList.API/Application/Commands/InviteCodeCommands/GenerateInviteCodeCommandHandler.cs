@@ -15,17 +15,20 @@ namespace SharedShoppingList.API.Application.Commands.InviteCodeCommands
         private readonly IRepository<UserGroup> userGroupRepository;
         private readonly IAuthorizationService authorizationService;
         private readonly IIdentityHelper identityHelper;
+        private readonly IInviteCodeService inviteCodeService;
         private readonly IUnitOfWork unitOfWork;
 
         public GenerateInviteCodeCommandHandler(
             IRepository<UserGroup> userGroupRepository,
             IAuthorizationService authorizationService,
             IIdentityHelper identityHelper,
+            IInviteCodeService inviteCodeService,
             IUnitOfWork unitOfWork)
         {
             this.userGroupRepository = userGroupRepository;
             this.authorizationService = authorizationService;
             this.identityHelper = identityHelper;
+            this.inviteCodeService = inviteCodeService;
             this.unitOfWork = unitOfWork;
         }
 
@@ -48,23 +51,9 @@ namespace SharedShoppingList.API.Application.Commands.InviteCodeCommands
                 throw new ForbiddenException();
             }
 
-            userGroup.InviteCode = GenerateInviteCode();
+            userGroup.InviteCode = inviteCodeService.GenerateInviteCode();
             await unitOfWork.SaveChangesAsync(cancellationToken);
             return userGroup.InviteCode;
-        }
-
-        private string GenerateInviteCode()
-        {
-            const string validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            var sb = new StringBuilder();
-            var random = new Random();
-
-            for (int i = 0; i < 6; i++)
-            {
-                sb.Append(validChars[random.Next(validChars.Length)]);
-            }
-
-            return sb.ToString();
-        }
+        }        
     }
 }

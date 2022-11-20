@@ -36,8 +36,7 @@ namespace SharedShoppingList.API.Application.Commands.UserGroupCommands
             return new PaginatedList<UserGroup>(
                 user.Groups,
                 user.Groups.Count,
-                command.PageSize,
-                command.PageIndex);
+                command.Offset);
         }
     }
 }

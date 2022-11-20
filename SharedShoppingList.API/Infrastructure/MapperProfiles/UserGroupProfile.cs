@@ -16,6 +16,7 @@ namespace SharedShoppingList.API.Infrastructure.MapperProfiles
                     options => options.MapFrom(group => group.Members.Count));
             CreateMap<CreateUserGroupDto, CreateUserGroupCommand>();
             CreateMap<UpdateUserGroupDto, UpdateUserGroupCommand>();
+            CreateMap<UserGroup, UserGroupDetailsViewModel>();
         }
     }
 }

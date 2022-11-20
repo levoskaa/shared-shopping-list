@@ -47,14 +47,14 @@ namespace SharedShoppingList.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<PaginatedListViewModel<ShoppingListEntryViewModel>> GetShoppingListEntries(
             [FromRoute] int groupId,
-            [FromQuery] int pageSize = 10,
-            [FromQuery] int pageIndex = 1)
+            [FromQuery] int? pageSize,
+            [FromQuery] int? offset)
         {
             var getShoppingListEntriesCommand = new GetShoppingListEntriesCommand
             {
                 GroupId = groupId,
                 PageSize = pageSize,
-                PageIndex = pageIndex,
+                Offset = offset,
             };
             var shoppingListEntries = await mediator.Send(getShoppingListEntriesCommand);
             return mapper.Map<PaginatedListViewModel<ShoppingListEntryViewModel>>(shoppingListEntries);
