@@ -22,12 +22,13 @@
   "regenerate": "regenerate",
   "userGroups": {
     "listHeader": "Your groups",
-    "members": "member(s)",
+    "membersLabel": "member(s)",
     "joinExisting": "join existing",
     "createNew": "Create new group",
     "join": "Join group",
     "inviteCode": "invite code",
-    "shoppingList": "shopping list"
+    "shoppingList": "shopping list",
+    "members": "members"
   },
   "shoppingList": {
     "createNew": "Create new entry",

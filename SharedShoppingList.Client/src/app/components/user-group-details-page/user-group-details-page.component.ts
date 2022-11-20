@@ -14,7 +14,7 @@ import { AuthState } from 'src/app/shared/states/auth/auth.state';
 })
 export class UserGroupDetailsPageComponent implements OnInit {
   groupId!: number;
-  userGroup!: UserGroupDetailsViewModel;
+  userGroup?: UserGroupDetailsViewModel;
 
   private username?: string;
 
