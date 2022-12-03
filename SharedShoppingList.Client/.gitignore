@@ -1,5 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+android/
+
 # Compiled output
 /dist
 /tmp
@@ -40,3 +42,87 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+
+# Ionic begin
+*~
+*.sw[mnpcod]
+*.log
+*.lock
+*.tmp
+*.tmp.*
+log.txt
+*.sublime-project
+*.sublime-workspace
+
+.idea/
+.vscode/
+.sass-cache/
+.versions/
+coverage/
+collection/
+dist/
+dist-transpiled/
+node_modules/
+tmp/
+temp/
+core/theme-builder/
+core/test-components/
+core/css/
+$RECYCLE.BIN/
+
+.DS_Store
+Thumbs.db
+UserInterfaceState.xcuserstate
+.env
+
+.package.tmp.json
+
+src/themes/version.scss
+scripts/e2e/webpackEntryPoints.json
+scripts/build/e2e-generated-tsconfig.json
+*.css.ts
+
+stats.json
+
+# demo stuff
+demos/node_modules
+demos/polyfills
+demos/css
+demos/fonts
+demos/src/**/*.js
+demos/src/**/*.map
+demos/src/**/*.ngfactory.ts
+demos/src/**/*.d.ts
+demos/src/**/*.metadata.json
+demos/src/**/*.css.shim.ts
+prerender.html
+prerender-domino.html
+prerender-hydrated.html
+prerender-static.html
+
+# stencil
+packages/react/css/
+packages/vue/css/
+core/components/
+core/css/
+core/hydrate/
+core/loader/
+core/www/
+.stencil/
+
+# playwright
+core/test-results/
+core/playwright-report/
+core/**/*-snapshots
+
+# angular
+angular/css/
+angular/test/build/
+.angular/
+
+# vue
+packages/vue/test/build/
+
+.npmrc
+# Ionic end
