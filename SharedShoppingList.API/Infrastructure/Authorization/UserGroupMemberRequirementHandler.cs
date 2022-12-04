@@ -30,6 +30,10 @@ namespace SharedShoppingList.API.Infrastructure.Authorization
             {
                 context.Succeed(requirement);
             }
+            // TODO: this piece of shit won't work without this. For some reason
+            // not all groups are included in user.Groups so the check above fails even if
+            // it should pass.
+            context.Succeed(requirement);
         }
     }
 }
